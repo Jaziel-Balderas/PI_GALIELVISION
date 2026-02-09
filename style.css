@@ -87,6 +87,28 @@ h1 {
     border-bottom: 2px solid #1E90FF;
 }
 
+.icon-box {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.material-symbols-outlined {
+    font-size: 10vh !important;
+    color: #1E90FF;
+    transition: all 0.3s ease;
+}
+
+.options:hover .material-symbols-outlined {
+    color: #ffffff;
+    /* El icono cambia a blanco */
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 10px rgba(30, 144, 255, 0.8));
+}
+
+
 /* --- DISEÑO RESPONSIVO MENU --- */
 @media (max-width: 768px) {
 
