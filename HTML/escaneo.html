@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESCANEO - GalielVision</title>
+    <link rel="stylesheet" href="/CSS/scanStyle.css">
+    <link rel="icon" href="/IMAGES/SCAN.png" type="image/png">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+</head>
+
+<body>
+    <div class="scan-wrapper">
+        <h1 class="scan-title">Escáner de Banderas</h1>
+
+        <div class="main-layout">
+            <div class="video-container">
+                <video id="webcam" autoplay playsinline></video>
+                <div class="mobile-hud-anchor"></div>
+            </div>
+
+            <div class="scan-ui">
+                <div class="ui-element top-left">
+                    <span class="fi fi-mx"></span>
+                    <span class="country-name">MÉXICO</span>
+                </div>
+
+                <div class="ui-element top-right">
+                    <button class="btn-more-info" onclick="abrirModal()">
+                        <span class="material-symbols-outlined">info</span>
+                    </button>
+                </div>
+
+                <div class="ui-element bottom-left">
+                    <span class="material-symbols-outlined trophy-icon">trophy</span>
+                    <span class="titles-count">0 MUNDIALES</span>
+                </div>
+
+                <div class="ui-element bottom-center">
+                    <p>¿SERÁ CAMPEÓN?</p>
+                    <div class="poll-buttons">
+                        <button class="btn-poll">SÍ</button>
+                        <button class="btn-poll">NO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-back" onclick="window.history.back()">
+            <span class="material-symbols-outlined">arrow_back</span>
+            VOLVER
+        </button>
+    </div>
+
+    <div id="modal-scan" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModal()">&times;</span>
+            <div class="modal-header">
+                <span class="fi fi-mx" style="font-size: 2.5rem; border-radius: 5px;"></span>
+                <h2>MÉXICO</h2>
+            </div>
+            <div class="modal-body">
+                <p class="play-in-mx">🇲🇽 <b>¿Jugará en México?</b> Sí, en el Estadio Azteca.</p>
+                <div class="player-card">
+                    <div class="player-photo">
+                        <img src="https://via.placeholder.com/80" alt="Santi Giménez">
+                    </div>
+                    <div class="player-info">
+                        <h3>SANTI GIMÉNEZ <span class="dorsal">#11</span></h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Goleador en Europa</li>
+                            <li>• Gran juego aéreo</li>
+                            <li>• Olfato goleador letal</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="fun-facts">
+                    <h4>DATOS CURIOSOS</h4>
+                    <p>Es la única selección en jugar 3 partidos inaugurales como anfitrión de una Copa del Mundo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('webcam');
+
+        async function activarCamara() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "environment" },
+                    audio: false
+                });
+                video.srcObject = stream;
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Revisa los permisos de la cámara.");
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', activarCamara);
+
+        function abrirModal() {
+            const modal = document.getElementById('modal-scan');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('modal-active'), 10);
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById('modal-scan');
+            modal.classList.remove('modal-active');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        window.onclick = (e) => {
+            if (e.target.id === 'modal-scan') cerrarModal();
+        }
+    </script>
+</body>
+
+</html>

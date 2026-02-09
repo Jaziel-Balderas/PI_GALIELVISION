@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EQUIPOS</title>
+    <link rel="icon" href="/IMAGES/GROUPS.png" type="image/png">
+    <link rel="stylesheet" href="/CSS/equiposStyle.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+</head>
+
+<body>
+    <h1>
+        GalielVision
+    </h1>
+    <div class="EquiposContainer">
+
+        <h3 class="section-title">Anfitriones 2026</h3>
+        <div class="grid-anfitriones">
+            <div class="pais-card gold">
+                <span class="fi fi-mx"></span>
+                <p>MÉXICO</p>
+            </div>
+            <div class="pais-card gold">
+                <span class="fi fi-us"></span>
+                <p>USA</p>
+            </div>
+            <div class="pais-card gold">
+                <span class="fi fi-ca"></span>
+                <p>CANADÁ</p>
+            </div>
+        </div>
+
+        <h3 class="section-title">Gigantes de América</h3>
+        <div class="grid-america">
+            <div class="pais-card">
+                <span class="fi fi-ar"></span>
+                <p>ARGENTINA</p>
+            </div>
+            <div class="pais-card">
+                <span class="fi fi-br"></span>
+                <p>BRASIL</p>
+            </div>
+            <div class="pais-card">
+                <span class="fi fi-uy"></span>
+                <p>URUGUAY</p>
+            </div>
+            <div class="pais-card">
+                <span class="fi fi-co"></span>
+                <p>COLOMBIA</p>
+            </div>
+        </div>
+
+        <h3 class="section-title">Élite Europea</h3>
+        <div class="grid-europa">
+            <div class="pais-card"><span class="fi fi-fr"></span>
+                <p>FRANCIA</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-es"></span>
+                <p>ESPAÑA</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-de"></span>
+                <p>ALEMANIA</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-gb-eng"></span>
+                <p>INGLATERRA</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-it"></span>
+                <p>ITALIA</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-pt"></span>
+                <p>PORTUGAL</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-nl"></span>
+                <p>P. BAJOS</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-be"></span>
+                <p>BÉLGICA</p>
+            </div>
+        </div>
+        <h3 class="section-title">Otras regiones</h3>
+        <div class="grid-others">
+            <div class="pais-card"><span class="fi fi-jp"></span>
+                <p>JAPÓN</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-kr"></span>
+                <p>COREA DEL SUR</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-ma"></span>
+                <p>MARRUECOS</p>
+            </div>
+            <div class="pais-card"><span class="fi fi-sn"></span>
+                <p>SENEGAL</p>
+            </div>
+        </div>
+    </div>
+    <div id="modal-pais" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModal()">&times;</span>
+            <div id="modal-bandera" style="margin-bottom: 10px;"></div>
+            <h2 id="modal-titulo">PAÍS</h2>
+            <div class="modal-info">
+                <span class="dt-label">👤 DIRECTOR TÉCNICO:</span>
+                <p id="modal-dt" style="margin-bottom: 15px; font-weight: 500;"></p>
+
+                <span class="dt-label">📝 RESEÑA:</span>
+                <p id="modal-resena" style="font-weight: 300;"></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    let datosEquipos = {};
+
+    fetch('/DatosEquipo.json')
+        .then(res => res.json())
+        .then(data => datosEquipos = data)
+        .catch(err => console.error("Error cargando JSON:", err));
+
+    document.querySelectorAll('.pais-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const paisNombre = card.querySelector('p').innerText.toUpperCase();
+            const info = datosEquipos[paisNombre];
+            const banderaClase = card.querySelector('.fi').className;
+
+            if (info) {
+                document.getElementById('modal-titulo').innerText = paisNombre;
+                document.getElementById('modal-dt').innerText = info.dt;
+                document.getElementById('modal-resena').innerText = info.resena;
+
+                document.getElementById('modal-bandera').innerHTML = `
+    <span class="${banderaClase}" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></span>
+`;
+                const modal = document.getElementById('modal-pais');
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('modal-active'), 10);
+            }
+        });
+    });
+
+    function cerrarModal() {
+        const modal = document.getElementById('modal-pais');
+        modal.classList.remove('modal-active');
+        setTimeout(() => modal.style.display = 'none', 300);
+    }
+    window.onclick = (e) => {
+        if (e.target.id === 'modal-pais') cerrarModal();
+    }
+</script>

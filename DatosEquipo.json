@@ -1,0 +1,78 @@
+{
+    "MÉXICO": {
+        "dt": "Javier Aguirre",
+        "resena": "El Tri busca hacer historia como anfitrión por tercera vez. Una selección en proceso de renovación bajo el mando del 'Vasco'."
+    },
+    "USA": {
+        "dt": "Mauricio Pochettino",
+        "resena": "Con su generación más talentosa en Europa, Estados Unidos busca dar el salto definitivo a la élite mundial en casa."
+    },
+    "CANADÁ": {
+        "dt": "Jesse Marsch",
+        "resena": "La hoja de maple ha crecido exponencialmente, destacando por su velocidad y orden táctico en la zona de CONCACAF."
+    },
+    "ARGENTINA": {
+        "dt": "Lionel Scaloni",
+        "resena": "La vigente campeona del mundo y de América. Mantienen un estilo sólido y el hambre de gloria intacta."
+    },
+    "BRASIL": {
+        "dt": "Dorival Júnior",
+        "resena": "El 'Pentacampeão' siempre es favorito. Un equipo que combina magia individual con una presión ofensiva constante."
+    },
+    "URUGUAY": {
+        "dt": "Marcelo Bielsa",
+        "resena": "La garra charrúa renovada. Con Bielsa, Uruguay ha ganado una intensidad y verticalidad temible para cualquier rival."
+    },
+    "COLOMBIA": {
+        "dt": "Néstor Lorenzo",
+        "resena": "Los cafeteros viven un gran momento, con un fútbol vistoso y figuras que brillan en las mejores ligas del mundo."
+    },
+    "FRANCIA": {
+        "dt": "Didier Deschamps",
+        "resena": "Una fábrica inagotable de talento. 'Les Bleus' destacan por su potencia física y transiciones ofensivas letales."
+    },
+    "ESPAÑA": {
+        "dt": "Luis de la Fuente",
+        "resena": "La campeona de la Euro 2024. Su fútbol se basa en la posesión inteligente y la explosividad de sus extremos jóvenes."
+    },
+    "ALEMANIA": {
+        "dt": "Julian Nagelsmann",
+        "resena": "La 'Mannschaft' busca recuperar su trono mundial con un sistema moderno y una mezcla de jerarquía y nuevas joyas."
+    },
+    "INGLATERRA": {
+        "dt": "Thomas Tuchel",
+        "resena": "Los inventores del fútbol cuentan con una de las plantillas más completas del planeta, hambrientos de un título mayor."
+    },
+    "ITALIA": {
+        "dt": "Luciano Spalletti",
+        "resena": "La 'Azzurra' está en reconstrucción táctica, apostando por el orden defensivo histórico pero con mayor propuesta ofensiva."
+    },
+    "PORTUGAL": {
+        "dt": "Roberto Martínez",
+        "resena": "Un equipo plagado de estrellas mundiales que destaca por su profundidad de banquillo y versatilidad técnica."
+    },
+    "P. BAJOS": {
+        "dt": "Ronald Koeman",
+        "resena": "La 'Naranja Mecánica' mantiene su filosofía de fútbol total, con una defensa sólida y un mediocampo muy dinámico."
+    },
+    "BÉLGICA": {
+        "dt": "Domenico Tedesco",
+        "resena": "En plena transición generacional, los 'Diablos Rojos' siguen siendo un equipo peligroso gracias a su contragolpe."
+    },
+    "JAPÓN": {
+        "dt": "Hajime Moriyasu",
+        "resena": "Los 'Samuráis Azules' son la potencia de Asia, conocidos por su disciplina táctica y transiciones a velocidad luz."
+    },
+    "COREA DEL SUR": {
+        "dt": "Hong Myung-bo",
+        "resena": "Un equipo incansable con individualidades de clase mundial que nunca da un balón por perdido."
+    },
+    "MARRUECOS": {
+        "dt": "Walid Regragui",
+        "resena": "La revelación de Qatar 2022. Un muro defensivo impecable y un orgullo nacional que los hace competir al más alto nivel."
+    },
+    "SENEGAL": {
+        "dt": "Aliou Cissé",
+        "resena": "Los 'Leones de la Teranga' combinan el poderío físico africano con una madurez táctica adquirida en Europa."
+    }
+}
