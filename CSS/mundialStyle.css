@@ -1,0 +1,170 @@
+/* --- CSS/mundialStyle.css --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #0937b6, #020617);
+    background-attachment: fixed;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    padding-bottom: 40px;
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px 20px 20px;
+}
+
+h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+/* --- NUEVO: GALERÍA DE IMÁGENES HERO --- */
+.hero-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 20px auto 50px auto;
+    width: 90%;
+    max-width: 1000px;
+    flex-wrap: wrap; /* Para que baje en móviles */
+}
+
+.hero-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.hero-item:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #38bdf8;
+    box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+}
+
+.hero-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain; /* Mantiene la proporción de la imagen */
+    margin-bottom: 15px;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+}
+
+.hero-item span {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: #94a3b8;
+    font-weight: bold;
+}
+/* ------------------------------------- */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #1E90FF;
+}
+
+.card-icon {
+    font-size: 3rem;
+    color: #1E90FF;
+    margin-bottom: 20px;
+}
+
+.info-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.info-card p {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.hosts-flags {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    font-size: 2.5rem;
+}
+
+.stat-big {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: white;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.btn-back {
+    display: block;
+    width: fit-content;
+    margin: 40px auto;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 30px;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Ajustes Mobile */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem; letter-spacing: 1px; }
+    
+    .hero-gallery {
+        flex-direction: column; /* Apilar imágenes verticalmente */
+        width: 100%;
+        gap: 20px;
+    }
+    
+    .hero-item {
+        width: 100%; /* Ocupar todo el ancho disponible */
+        max-width: 350px;
+    }
+
+    .hero-item img {
+        height: 180px;
+    }
+}

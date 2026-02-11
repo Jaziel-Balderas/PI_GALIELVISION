@@ -169,6 +169,23 @@
         color: #fff;
     }
 
+    .btn-back {
+    display: block;
+    width: fit-content;
+    margin: 40px auto;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 30px;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
     #modal-bandera span {
         border-radius: 4px !important;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia - GalielVision</title>
+    <link rel="icon" href="IMAGES/TRIVIA.png" type="image/png">
+    <link rel="stylesheet" href="/CSS/triviaStyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+<body>
+
+    <div class="trivia-container">
+        <div class="score-board">
+            PUNTOS: <span id="score">0</span>
+        </div>
+
+        <div class="question-card">
+            <span class="material-symbols-outlined" style="font-size: 4rem; color: #38bdf8; margin-bottom: 15px;">quiz</span>
+            <p class="question-text">¿En qué estadio se jugará la final del Mundial 2026?</p>
+        </div>
+
+        <div class="answers-grid" id="options-container">
+            <button class="btn-answer opt-1" onclick="verificar(this, false)">
+                <span class="material-symbols-outlined">close</span> Estadio Azteca
+            </button>
+            <button class="btn-answer opt-2" onclick="verificar(this, true)">
+                <span class="material-symbols-outlined">verified</span> MetLife Stadium
+            </button>
+            <button class="btn-answer opt-3" onclick="verificar(this, false)">
+                <span class="material-symbols-outlined">close</span> SoFi Stadium
+            </button>
+            <button class="btn-answer opt-4" onclick="verificar(this, false)">
+                <span class="material-symbols-outlined">close</span> Santiago Bernabéu
+            </button>
+        </div>
+
+        <a href="/index.html" class="btn-back">
+            <span class="material-symbols-outlined">arrow_back</span> MENÚ PRINCIPAL
+        </a>
+    </div>
+
+    <script>
+        let score = 0;
+        let respondido = false;
+
+        function verificar(boton, esCorrecta) {
+            if (respondido) return;
+            respondido = true;
+
+            const botones = document.querySelectorAll('.btn-answer');
+            botones.forEach(btn => btn.classList.add('disabled'));
+
+            if (esCorrecta) {
+                boton.classList.add('correct');
+                score += 100;
+                document.getElementById('score').innerText = score;
+            } else {
+                boton.classList.add('wrong');
+                botones.forEach(btn => {
+                    if(btn.innerText.includes("MetLife")) btn.classList.add('correct');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
