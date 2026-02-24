@@ -120,7 +120,7 @@
 <script>
     let datosEquipos = {};
 
-    fetch('../DatosEquipo.json')
+    fetch('../JSON/DatosEquipo.json')
         .then(res => res.json())
         .then(data => datosEquipos = data)
         .catch(err => console.error("Error cargando JSON:", err));

@@ -4,121 +4,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESCANEO - GalielVision</title>
+    <title>GalielVision - Escáner 2026</title>
     <link rel="stylesheet" href="../CSS/scanStyle.css">
-    <link rel="icon" href="../IMAGES/SCAN.png" type="image/png">
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
 </head>
 
 <body>
-    <div class="scan-wrapper">
-        <h1 class="scan-title">Escáner de Banderas</h1>
 
-        <div class="main-layout">
-            <div class="video-container">
-                <video id="webcam" autoplay playsinline></video>
-                <div class="mobile-hud-anchor"></div>
+    <div class="app-container">
+        <header class="main-header">
+            <h1>GALIEL<span>VISION</span></h1>
+            <div class="badge-pais">
+                <span class="fi fi-mx"></span>
+                <span id="country-name">MÉXICO</span>
             </div>
+        </header>
 
-            <div class="scan-ui">
-                <div class="ui-element top-left">
-                    <span class="fi fi-mx"></span>
-                    <span class="country-name">MÉXICO</span>
+        <main class="content-layout">
+            <section class="camera-side">
+                <div class="video-window">
+                    <video id="webcam" autoplay playsinline muted></video>
+                    <div class="scan-frame"></div>
                 </div>
+                <div class="button-group">
+                    <button class="btn-highlight" onclick="window.location.href='../HTML/video.html'">
+                        <div class="highlight-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false"
+                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
+                                    position="0 0 0"></a-camera>
+                                <a-light type="ambient" intensity="1.5"></a-light>
+                                <a-light type="directional" position="1 1 1" intensity="1"></a-light>
+                                <a-entity gltf-model="../Modelos/porteria_futbol_soccer_goal.glb" scale="0.5 0.5 0.5"
+                                    position="0 -0.39 -1.3" rotation="0 50 0"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span class="btn-text">VER MEJOR GOL</span>
+                    </button>
 
-                <div class="ui-element top-right">
-                    <button class="btn-more-info" onclick="abrirModal()">
-                        <span class="material-symbols-outlined">info</span>
+                    <button class="btn-back-main" onclick="window.location.href='../index.html'">
+                        CERRAR ESCÁNER
                     </button>
                 </div>
+            </section>
 
-                <div class="ui-element bottom-left">
-                    <span class="material-symbols-outlined trophy-icon">trophy</span>
-                    <span class="titles-count">0 MUNDIALES</span>
-                </div>
+            <section class="info-side">
 
-                <div class="ui-element bottom-center">
-                    <p>¿SERÁ CAMPEÓN?</p>
-                    <div class="poll-buttons">
-                        <button class="btn-poll">SÍ</button>
-                        <button class="btn-poll">NO</button>
+                <div class="info-card trophy-card">
+                    <div class="info-text">
+                        <span class="value"> MUNDIALES:</span>
+                    </div>
+                    <div class="view-3d">
+                        <a-scene embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled: false"
+                            renderer="alpha:true">
+                            <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
+                                position="0 0 0"></a-camera>
+                            <a-light type="ambient" intensity="1.5"></a-light>
+                            <a-light type="directional" position="1 2 10" intensity="5"></a-light>
+
+                            <a-entity gltf-model="../Modelos/world_cup_trophy.glb" position="0 -20 -38"
+                                scale="0.1 0.1 0.1"
+                                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000"></a-entity>
+                        </a-scene>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <button class="btn-back" onclick="window.history.back()">
-            <span class="material-symbols-outlined">arrow_back</span>
-            VOLVER
-        </button>
-    </div>
+                <div class="stats-mini-grid">
+                    <div class="stat-item">
+                        <div class="mini-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false"
+                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
+                                    position="0 0 0"></a-camera>
+                                <a-light type="ambient" intensity="1.5"></a-light>
+                                <a-light type="directional" position="1 1 1" intensity="1"></a-light>
 
-    <div id="modal-scan" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-modal" onclick="cerrarModal()">&times;</span>
-            <div class="modal-header">
-                <span class="fi fi-mx" style="font-size: 2.5rem; border-radius: 5px;"></span>
-                <h2>MÉXICO</h2>
-            </div>
-            <div class="modal-body">
-                <p class="play-in-mx">🇲🇽 <b>¿Jugará en México?</b> Sí, en el Estadio Azteca.</p>
-                <div class="player-card">
-                    <div class="player-photo">
-                        <img src="https://tecolotito.elsiglodedurango.com.mx/i/2025/02/1298601.jpeg"
-                            alt="Santi Giménez">
+                                <a-entity gltf-model="../Modelos/football.glb" position="0 0 -5" scale="3 3 3"
+                                    animation="property: rotation; to: 0 360 0; loop: true; dur: 4000"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span>GOLEADOR</span>
                     </div>
-                    <div class="player-info">
-                        <h3>SANTI GIMÉNEZ <span class="dorsal">#11</span></h3>
-                        <ul style="list-style: none; padding: 0;">
-                            <li>• Goleador en Europa</li>
-                            <li>• Gran juego aéreo</li>
-                            <li>• Olfato goleador letal</li>
-                        </ul>
+
+                    <div class="stat-item">
+                        <div class="mini-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false"
+                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
+                                    position="0 0 0"></a-camera>
+                                <a-light type="ambient" intensity="1.5"></a-light>
+                                <a-light type="directional" position="1 1 1" intensity="1"></a-light>
+
+                                <a-entity gltf-model="../Modelos/scanned_soccer_shoe.glb" position="0 0 -1.5"
+                                    scale="5 5 5" rotation="0 90 0"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span>ASISTIDOR</span>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="mini-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false"
+                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
+                                    position="0 0 0"></a-camera>
+                                <a-light type="ambient" intensity="1.5"></a-light>
+                                <a-light type="directional" position="1 5 10" intensity="2"></a-light>
+
+                                <a-entity gltf-model="../Modelos/gloves_goalkeeper.glb" position="0 2.5 -110"
+                                    scale="1 1 1" rotation="0 90 0"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span>PORTERO</span>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="mini-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false"
+                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
+                                    position="0 0 0"></a-camera>
+                                <a-light type="ambient" intensity="1.5"></a-light>
+                                <a-light type="directional" position="1 1 1" intensity="1"></a-light>
+
+                                <a-entity gltf-model="../Modelos/low_quality_soccer_stadium.glb" position="0 0 -60"
+                                    scale="0.004 0.004 0.004" rotation="65 30 30"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span>ESTADIO</span>
                     </div>
                 </div>
-                <div class="fun-facts">
-                    <h4>DATOS CURIOSOS</h4>
-                    <p>Es la única selección en jugar 3 partidos inaugurales como anfitrión de una Copa del Mundo.</p>
+
+                <div class="prediction-box">
+                    <div class="vote-options">
+                        <div class="vote-btn">
+                            <div class="vote-3d">
+                                <a-scene embedded vr-mode-ui="enabled:false"
+                                    device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                    <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
+                                        position="0 0 0"></a-camera>
+                                    <a-light type="ambient" intensity="1.5"></a-light>
+                                    <a-light type="directional" position="1 1 10" intensity="13"></a-light>
+
+                                    <a-entity gltf-model="../Modelos/golden_crown.glb" position="-0.8 0 -6"
+                                        scale="1 1 1"></a-entity>
+                                </a-scene>
+                            </div>
+                            <button>SÍ</button>
+                        </div>
+                        <div class="vote-btn">
+                            <div class="vote-3d">
+                                <a-scene embedded vr-mode-ui="enabled:false"
+                                    device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                    <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
+                                        position="0 0 0"></a-camera>
+                                    <a-light type="ambient" intensity="1.5"></a-light>
+                                    <a-light type="directional" position="1 1 1" intensity="1"></a-light>
+
+                                    <a-entity gltf-model="../Modelos/emoji_tired_cartoon.glb" position="-160 10 -80"
+                                        rotation="0 -90 0" scale="40 40 40"></a-entity>
+                                </a-scene>
+                            </div>
+                            <button class="no">NO</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     </div>
 
     <script>
         const video = document.getElementById('webcam');
-
-        async function activarCamara() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "environment" },
-                    audio: false
-                });
-                video.srcObject = stream;
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Revisa los permisos de la cámara.");
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', activarCamara);
-
-        function abrirModal() {
-            const modal = document.getElementById('modal-scan');
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('modal-active'), 10);
-        }
-
-        function cerrarModal() {
-            const modal = document.getElementById('modal-scan');
-            modal.classList.remove('modal-active');
-            setTimeout(() => modal.style.display = 'none', 300);
-        }
-
-        window.onclick = (e) => {
-            if (e.target.id === 'modal-scan') cerrarModal();
-        }
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(stream => video.srcObject = stream);
     </script>
 </body>
 

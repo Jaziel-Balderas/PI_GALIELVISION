@@ -1,0 +1,242 @@
+[
+    {
+        "q": "¿En qué estadio se jugará la final del Mundial 2026?",
+        "options": [
+            "Estadio Azteca",
+            "MetLife Stadium",
+            "SoFi Stadium",
+            "Hard Rock Stadium"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Cuántas sedes tendrá México en el Mundial 2026?",
+        "options": [
+            "2 Sedes",
+            "3 Sedes",
+            "4 Sedes",
+            "5 Sedes"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Qué selección ganó el primer mundial de la historia?",
+        "options": [
+            "Brasil",
+            "Uruguay",
+            "Argentina",
+            "Francia"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Quién es el máximo goleador histórico de los mundiales?",
+        "options": [
+            "Pelé",
+            "Lionel Messi",
+            "Miroslav Klose",
+            "Ronaldo Nazario"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Qué país ha ganado más Copas del Mundo en la historia?",
+        "options": [
+            "Alemania",
+            "Italia",
+            "Brasil",
+            "Argentina"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿En qué año se celebró el primer Mundial de fútbol?",
+        "options": [
+            "1920",
+            "1930",
+            "1950",
+            "1900"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Cuál es el máximo goleador histórico de los mundiales?",
+        "options": [
+            "Pelé",
+            "Lionel Messi",
+            "Miroslav Klose",
+            "Cristiano Ronaldo"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Qué selección ganó el Mundial de Qatar 2022?",
+        "options": [
+            "Francia",
+            "Argentina",
+            "Croacia",
+            "Marruecos"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Cuántas selecciones participarán en el Mundial 2026?",
+        "options": [
+            "32 selecciones",
+            "40 selecciones",
+            "48 selecciones",
+            "64 selecciones"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Cuál es el estadio con mayor capacidad en México para el 2026?",
+        "options": [
+            "Estadio BBVA",
+            "Estadio Akron",
+            "Estadio Azteca",
+            "Estadio Olímpico"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Qué jugador tiene el récord de más Balones de Oro?",
+        "options": [
+            "Cristiano Ronaldo",
+            "Johan Cruyff",
+            "Lionel Messi",
+            "Michel Platini"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Quién era el capitán de la selección argentina en 1986?",
+        "options": [
+            "Diego Maradona",
+            "Daniel Passarella",
+            "Mario Kempes",
+            "Oscar Ruggeri"
+        ],
+        "correct": 0
+    },
+    {
+        "q": "¿En qué país se inventó el fútbol moderno?",
+        "options": [
+            "Brasil",
+            "Inglaterra",
+            "Francia",
+            "España"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Qué selección es conocida como 'La Naranja Mecánica'?",
+        "options": [
+            "Alemania",
+            "Países Bajos",
+            "Bélgica",
+            "España"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Cuál es el único jugador en ganar 3 Copas del Mundo?",
+        "options": [
+            "Zinedine Zidane",
+            "Franz Beckenbauer",
+            "Pelé",
+            "Ronaldo"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Qué ciudad de Canadá será sede en el Mundial 2026?",
+        "options": [
+            "Montreal",
+            "Ottawa",
+            "Vancouver",
+            "Quebec"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Cómo se llama el trofeo original de la Copa del Mundo?",
+        "options": [
+            "Copa FIFA",
+            "Jules Rimet",
+            "Copa UEFA",
+            "Balón de Oro"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Qué selección africana llegó a semis por primera vez en 2022?",
+        "options": [
+            "Senegal",
+            "Marruecos",
+            "Camerún",
+            "Nigeria"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Quién ganó el Mundial de 2010 celebrado en Sudáfrica?",
+        "options": [
+            "Holanda",
+            "Alemania",
+            "España",
+            "Uruguay"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿A qué jugador le decían 'La Araña Negra'?",
+        "options": [
+            "Gianluigi Buffon",
+            "Iker Casillas",
+            "Lev Yashin",
+            "Manuel Neuer"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Qué selección tiene el récord de más finales perdidas?",
+        "options": [
+            "Argentina",
+            "Países Bajos",
+            "Alemania",
+            "Francia"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿En qué mundial se usó el VAR por primera vez?",
+        "options": [
+            "Brasil 2014",
+            "Rusia 2018",
+            "Qatar 2022",
+            "Sudáfrica 2010"
+        ],
+        "correct": 1
+    },
+    {
+        "q": "¿Quién anotó el 'Gol del Siglo' contra Inglaterra?",
+        "options": [
+            "Zico",
+            "Bobby Charlton",
+            "Diego Maradona",
+            "Marco van Basten"
+        ],
+        "correct": 2
+    },
+    {
+        "q": "¿Qué ciudad de EE.UU. albergará más partidos en 2026?",
+        "options": [
+            "Los Ángeles",
+            "Dallas",
+            "Miami",
+            "Nueva York"
+        ],
+        "correct": 1
+    }
+]
