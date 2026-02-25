@@ -1,11 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mejor Gol - AR Scanner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700&family=Oswald:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/videosStyle.css"> 
 </head>
 <body>
-    
+    <svg width="0" height="0" style="position: absolute;">
+        <filter id="pixelate" x="0" y="0">
+            <feComponentTransfer>
+                <feFuncR type="discrete" tableValues="0 0.25 0.5 0.75 1"/>
+                <feFuncG type="discrete" tableValues="0 0.25 0.5 0.75 1"/>
+                <feFuncB type="discrete" tableValues="0 0.25 0.5 0.75 1"/>
+            </feComponentTransfer>
+            <feGaussianBlur stdDeviation="2" />
+        </filter>
+    </svg>
+
+    <div class="app-container">
+        <header class="main-header">
+            <h1>MEJOR GOL</h1>
+        </header>
+
+        <main class="content-layout">
+            <section class="video-section">
+                <div class="video-wrapper">
+                    <video id="target-video" class="target-video" controls muted loop>
+                        <source src="../GOLES/Gol_Argentina.mp4" type="video/mp4">
+                        Tu navegador no soporta el formato de video.
+                    </video>
+                </div>
+                <h2 class="team-name">Selección Escaneada</h2>
+            </section>
+
+            <section class="controls-section">
+                <div class="filter-box">
+                    <label for="video-filter" class="filter-label">Filtro visual:</label>
+                    <select id="video-filter" class="glass-select">
+                        <option value="none">Sin filtro</option>
+                        <option value="filter-blur">1. Desenfoque</option>
+                        <option value="filter-pixelated">2. Pixeleados</option>
+                        <option value="filter-thermal">3. Cámara Térmica</option>
+                        <option value="filter-color">4. Ajuste de color</option>
+                        <option value="filter-saturated">5. Sobresaturado</option>
+                    </select>
+                </div>
+                
+                <a href="escaneo.html" class="btn-back-main">
+                    Volver al Escáner
+                </a>
+            </section>
+        </main>
+    </div>
+
+    <script src="../JS/videos.js"></script>
 </body>
 </html>
