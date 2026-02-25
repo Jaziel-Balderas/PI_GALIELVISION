@@ -56,32 +56,59 @@ body {
 }
 
 .video-window {
-    position: relative;
+    position: relative !important;
+    overflow: hidden !important;
     width: 90%;
     height: 65%;
-    /* Ajustado para dejar espacio a los dos botones */
     background: #000;
     border-radius: 24px;
-    position: relative;
-    overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.video-window a-scene {
-    width: 100%;
-    height: 100%;
 }
 
 .video-window canvas {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    object-fit: cover !important;
+}
+
+.scan-frame {
+    z-index: 10 !important;
+}
+
+body>video {
+    display: none !important;
+}
+
+.video-window video {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    object-fit: cover !important;
+    z-index: 1 !important;
+    /* Lo pone dentro del marco */
+}
+
+.mindar-ui-overlay {
+    display: none !important;
+}
+
+.a-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
 }
 
 #webcam {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .scan-frame {
@@ -90,6 +117,7 @@ body {
     border: 2px solid rgba(56, 189, 248, 0.3);
     border-radius: 15px;
     pointer-events: none;
+    z-index: 10 !important;
 }
 
 /* Contenedor de botones debajo de la cámara */
@@ -313,8 +341,7 @@ body {
 /* --- RESPONSIVO PARA MÓVILES --- */
 @media (max-width: 768px) {
     body {
-        background: transparent;
-        /* Permite ver la cámara de fondo */
+        background: #031338;
         overflow-y: auto;
     }
 

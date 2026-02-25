@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tracking.js/1.1.3/tracking-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 </head>
 
 <body>
@@ -27,7 +29,23 @@
         <main class="content-layout">
             <section class="camera-side">
                 <div class="video-window">
-                    <video id="webcam" autoplay playsinline muted></video>
+                    <a-scene
+                        mindar-image="imageTargetSrc: ../AR/targets.mind; autoStart: true; uiLoading: no; uiError: no; uiScanning: no"
+                        embedded vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+
+                        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+                        <a-entity mindar-image-target="targetIndex: 0"></a-entity> <a-entity
+                            mindar-image-target="targetIndex: 1"></a-entity> <a-entity
+                            mindar-image-target="targetIndex: 2"></a-entity> <a-entity
+                            mindar-image-target="targetIndex: 3"></a-entity> <a-entity
+                            mindar-image-target="targetIndex: 4"></a-entity> <a-entity
+                            mindar-image-target="targetIndex: 5"></a-entity> <a-entity
+                            mindar-image-target="targetIndex: 6"></a-entity> <a-entity
+                            mindar-image-target="targetIndex: 7"></a-entity> <a-entity
+                            mindar-image-target="targetIndex: 8"></a-entity> </a-scene>
+
+                    </a-scene>
                     <div class="scan-frame"></div>
                 </div>
                 <div class="button-group">
@@ -178,9 +196,73 @@
     </div>
 
     <script>
-        const video = document.getElementById('webcam');
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-            .then(stream => video.srcObject = stream);
+        // El orden exacto de tu archivo .mind
+        const targetsMap = {
+            0: "mexico",
+            1: "usa",
+            2: "canada",
+            3: "colombia",
+            4: "espana",
+            5: "japon",
+            6: "uruguay",
+            7: "sudafrica",
+            8: "corea"
+        };
+
+        const teamsData = {
+            "mexico": { name: "MÉXICO", flag: "fi-mx", mundiales: "17" },
+            "usa": { name: "ESTADOS UNIDOS", flag: "fi-us", mundiales: "11" },
+            "canada": { name: "CANADÁ", flag: "fi-ca", mundiales: "3" },
+            "colombia": { name: "COLOMBIA", flag: "fi-co", mundiales: "6" },
+            "espana": { name: "ESPAÑA", flag: "fi-es", mundiales: "16" },
+            "japon": { name: "JAPÓN", flag: "fi-jp", mundiales: "7" },
+            "uruguay": { name: "URUGUAY", flag: "fi-uy", mundiales: "14" },
+            "sudafrica": { name: "SUDÁFRICA", flag: "fi-za", mundiales: "3" },
+            "corea": { name: "COREA DEL SUR", flag: "fi-kr", mundiales: "11" }
+        };
+
+        function actualizarInterfaz(key) {
+            const data = teamsData[key];
+            if (data) {
+                const nameEl = document.getElementById('country-name');
+                if (nameEl) nameEl.innerText = data.name;
+
+                const flagEl = document.querySelector('.badge-pais .fi');
+                if (flagEl) {
+                    flagEl.className = `fi ${data.flag}`;
+                }
+
+                const mundialesText = document.querySelector('.info-text .value');
+                if (mundialesText) {
+                    mundialesText.innerHTML = `MUNDIALES: <span style="color:#fbbf24">${data.mundiales}</span>`;
+                }
+
+                console.log(">>> GALIELVISION: Identificado con éxito -> " + data.name);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const sceneEl = document.querySelector('a-scene');
+
+            const targets = document.querySelectorAll('[mindar-image-target]');
+
+            targets.forEach((target, index) => {
+                target.addEventListener("targetFound", (event) => {
+                    const countryKey = targetsMap[index];
+                    if (countryKey) {
+                        actualizarInterfaz(countryKey);
+
+                        if ("vibrate" in navigator) {
+                            navigator.vibrate(100);
+                        }
+                    }
+                });
+
+                target.addEventListener("targetLost", () => {
+                    console.log("Objetivo perdido");
+                });
+            });
+        });
     </script>
 </body>
 
