@@ -1,4 +1,3 @@
-/* --- CONFIGURACIÓN BASE --- */
 body {
     background: #031338;
     color: white;
@@ -422,3 +421,17 @@ body>video {
         height: 35vh;
     }
 }
+
+/* Oculta los botones de entrar en VR/AR que A-Frame crea automáticamente */
+.a-enter-vr,
+.a-enter-ar,
+.a-orientation-modal,
+.a-loader-title {
+    display: none !important;
+}
+
+/* Oculta el botón de inspección y otros elementos de la UI de A-Frame */
+.a-canvas+.a-ui,
+.a-inspector-loader {
+    display: none !important;
+}   

@@ -4,77 +4,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GalielVision - Escáner 2026</title>
+    <title>GalielVision - Escudos 2026</title>
     <link rel="stylesheet" href="../CSS/scanStyle.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tracking.js/1.1.3/tracking-min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* Estilos para el mensaje en pantalla */
+        #mensaje-overlay {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 23, 42, 0.95);
+            color: #38bdf8;
+            padding: 30px;
+            border: 3px solid #38bdf8;
+            border-radius: 20px;
+            z-index: 3000;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            min-width: 300px;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
+        }
+
+        #texto-mensaje {
+            margin: 0;
+            font-size: 20px;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .btn-cerrar {
+            margin-top: 20px;
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            transition: transform 0.2s;
+        }
+
+        .btn-cerrar:hover {
+            transform: scale(1.05);
+        }
+
+        .info-side {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            display: flex;
+        }
+
+        .info-side.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .a-enter-vr,
+        .a-enter-ar,
+        .a-orientation-modal,
+        .a-loader-title {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="mensaje-overlay">
+        <p id="texto-mensaje"></p>
+        <button class="btn-cerrar" onclick="cerrarMensaje()">¡ENTENDIDO!</button>
+    </div>
 
     <div class="app-container">
         <header class="main-header">
             <h1>GALIEL<span>VISION</span></h1>
             <div class="badge-pais">
-                <span class="fi fi-mx"></span>
-                <span id="country-name">MÉXICO</span>
+                <span id="flag-icon" class="fi fi-xx"></span>
+                <span id="country-name">ESPERANDO ESCUDO...</span>
             </div>
         </header>
 
         <main class="content-layout">
             <section class="camera-side">
                 <div class="video-window">
-                    <a-scene
-                        mindar-image="imageTargetSrc: ../AR/targets.mind; autoStart: true; uiLoading: no; uiError: no; uiScanning: no"
+                    <a-scene id="escena-ar"
+                        mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; maxTrack: 1; warmupTolerance: 1; missTolerance: 25"
                         embedded vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+
+                        <a-assets>
+                            <a-asset-item id="corona-mod" src="../Modelos/golden_crown.glb"></a-asset-item>
+                            <a-asset-item id="emoji-mod" src="../Modelos/emoji_tired_cartoon.glb"></a-asset-item>
+                            <a-asset-item id="trofeo-mod" src="../Modelos/world_cup_trophy.glb"></a-asset-item>
+                        </a-assets>
 
                         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-                        <a-entity mindar-image-target="targetIndex: 0"></a-entity> <a-entity
-                            mindar-image-target="targetIndex: 1"></a-entity> <a-entity
-                            mindar-image-target="targetIndex: 2"></a-entity> <a-entity
-                            mindar-image-target="targetIndex: 3"></a-entity> <a-entity
-                            mindar-image-target="targetIndex: 4"></a-entity> <a-entity
-                            mindar-image-target="targetIndex: 5"></a-entity> <a-entity
-                            mindar-image-target="targetIndex: 6"></a-entity> <a-entity
-                            mindar-image-target="targetIndex: 7"></a-entity> <a-entity
-                            mindar-image-target="targetIndex: 8"></a-entity> </a-scene>
-
+                        <a-entity mindar-image-target="targetIndex: 0" data-id="0"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 1" data-id="1"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 2" data-id="2"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 3" data-id="3"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 4" data-id="4"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 5" data-id="5"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 6" data-id="6"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 7" data-id="7"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 8" data-id="8"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 9" data-id="9"></a-entity>
+                        <a-entity mindar-image-target="targetIndex: 10" data-id="10"></a-entity>
                     </a-scene>
                     <div class="scan-frame"></div>
                 </div>
-                <div class="button-group">
-                    <button class="btn-highlight" onclick="window.location.href='../HTML/video.html'">
-                        <div class="highlight-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false"
-                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
-                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
-                                    position="0 0 0"></a-camera>
-                                <a-light type="ambient" intensity="1.5"></a-light>
-                                <a-light type="directional" position="1 1 1" intensity="1"></a-light>
-                                <a-entity gltf-model="../Modelos/porteria_futbol_soccer_goal.glb" scale="0.5 0.5 0.5"
-                                    position="0 -0.39 -1.3" rotation="0 50 0"></a-entity>
-                            </a-scene>
-                        </div>
-                        <span class="btn-text">VER MEJOR GOL</span>
-                    </button>
-
-                    <button class="btn-back-main" onclick="window.location.href='../index.html'">
-                        CERRAR ESCÁNER
-                    </button>
-                </div>
             </section>
 
-            <section class="info-side">
-
+            <section class="info-side" id="info-panel">
+                <h2 id="equipo-txt"
+                    style=" font-size: 50px; color: #38bdf8; font-family: 'Orbitron'; text-align: center; margin-bottom: 20px;">
+                    PAÍS
+                </h2>
                 <div class="info-card trophy-card">
                     <div class="info-text">
-                        <span class="value"> MUNDIALES:</span>
+                        <span id="trophy-label" class="value"> MUNDIALES:</span>
                     </div>
                     <div class="view-3d">
                         <a-scene embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled: false"
@@ -83,185 +140,141 @@
                                 position="0 0 0"></a-camera>
                             <a-light type="ambient" intensity="1.5"></a-light>
                             <a-light type="directional" position="1 2 10" intensity="5"></a-light>
-
-                            <a-entity gltf-model="../Modelos/world_cup_trophy.glb" position="0 -20 -38"
-                                scale="0.1 0.1 0.1"
-                                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000"></a-entity>
+                            <a-entity id="trophy-container"></a-entity>
                         </a-scene>
                     </div>
                 </div>
-
-                <div class="stats-mini-grid">
-                    <div class="stat-item">
-                        <div class="mini-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false"
-                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
-                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
-                                    position="0 0 0"></a-camera>
-                                <a-light type="ambient" intensity="1.5"></a-light>
-                                <a-light type="directional" position="1 1 1" intensity="1"></a-light>
-
-                                <a-entity gltf-model="../Modelos/football.glb" position="0 0 -5" scale="3 3 3"
-                                    animation="property: rotation; to: 0 360 0; loop: true; dur: 4000"></a-entity>
-                            </a-scene>
-                        </div>
-                        <span>GOLEADOR</span>
-                    </div>
-
-                    <div class="stat-item">
-                        <div class="mini-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false"
-                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
-                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
-                                    position="0 0 0"></a-camera>
-                                <a-light type="ambient" intensity="1.5"></a-light>
-                                <a-light type="directional" position="1 1 1" intensity="1"></a-light>
-
-                                <a-entity gltf-model="../Modelos/scanned_soccer_shoe.glb" position="0 0 -1.5"
-                                    scale="5 5 5" rotation="0 90 0"></a-entity>
-                            </a-scene>
-                        </div>
-                        <span>ASISTIDOR</span>
-                    </div>
-
-                    <div class="stat-item">
-                        <div class="mini-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false"
-                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
-                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
-                                    position="0 0 0"></a-camera>
-                                <a-light type="ambient" intensity="1.5"></a-light>
-                                <a-light type="directional" position="1 5 10" intensity="2"></a-light>
-
-                                <a-entity gltf-model="../Modelos/gloves_goalkeeper.glb" position="0 2.5 -110"
-                                    scale="1 1 1" rotation="0 90 0"></a-entity>
-                            </a-scene>
-                        </div>
-                        <span>PORTERO</span>
-                    </div>
-
-                    <div class="stat-item">
-                        <div class="mini-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false"
-                                device-orientation-permission-ui="enabled: false" renderer="alpha:true">
-                                <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
-                                    position="0 0 0"></a-camera>
-                                <a-light type="ambient" intensity="1.5"></a-light>
-                                <a-light type="directional" position="1 1 1" intensity="1"></a-light>
-
-                                <a-entity gltf-model="../Modelos/low_quality_soccer_stadium.glb" position="0 0 -60"
-                                    scale="0.004 0.004 0.004" rotation="65 30 30"></a-entity>
-                            </a-scene>
-                        </div>
-                        <span>ESTADIO</span>
-                    </div>
-                </div>
-
                 <div class="prediction-box">
                     <div class="vote-options">
                         <div class="vote-btn">
                             <div class="vote-3d">
                                 <a-scene embedded vr-mode-ui="enabled:false"
                                     device-orientation-permission-ui="enabled: false" renderer="alpha:true">
-                                    <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
-                                        position="0 0 0"></a-camera>
+                                    <a-camera look-controls="enabled: false" position="0 0 0"></a-camera>
                                     <a-light type="ambient" intensity="1.5"></a-light>
                                     <a-light type="directional" position="1 1 10" intensity="13"></a-light>
-
-                                    <a-entity gltf-model="../Modelos/golden_crown.glb" position="-0.8 0 -6"
-                                        scale="1 1 1"></a-entity>
+                                    <a-entity id="corona-ent" gltf-model="#corona-mod" position="0 -0.5 -4.5"
+                                        scale="1 1 1"
+                                        animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
+                                    </a-entity>
                                 </a-scene>
                             </div>
-                            <button>SÍ</button>
+                            <button onclick="procesarVoto(true)">SÍ</button>
                         </div>
+
                         <div class="vote-btn">
                             <div class="vote-3d">
                                 <a-scene embedded vr-mode-ui="enabled:false"
                                     device-orientation-permission-ui="enabled: false" renderer="alpha:true">
-                                    <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
-                                        position="0 0 0"></a-camera>
+                                    <a-camera look-controls="enabled: false" position="0 0 0"></a-camera>
                                     <a-light type="ambient" intensity="1.5"></a-light>
                                     <a-light type="directional" position="1 1 1" intensity="1"></a-light>
-
-                                    <a-entity gltf-model="../Modelos/emoji_tired_cartoon.glb" position="-160 10 -80"
-                                        rotation="0 -90 0" scale="40 40 40"></a-entity>
+                                    <a-entity gltf-model="#emoji-mod" position="-160 0 -90" rotation="0 -90 0"
+                                        scale="40 20 40"
+                                        animation__float="property: position; from: -160 -2 -90; to: -160 5 -90; dur: 1500; dir: alternate; loop: true; easing: easeInOutSine">
+                                    </a-entity>
                                 </a-scene>
                             </div>
-                            <button class="no">NO</button>
+                            <button class="no" onclick="procesarVoto(false)">NO</button>
                         </div>
                     </div>
+
+                    <button id="btn-ver-mas" class="btn-highlight"
+                        style="margin-top: 20px; width: 100%; height: 60px !important;">
+                        <span class="btn-text">VER MÁS ACERCA DE LA SELECCIÓN</span>
+                    </button>
                 </div>
             </section>
         </main>
     </div>
 
     <script>
-        // El orden exacto de tu archivo .mind
-        const targetsMap = {
-            0: "mexico",
-            1: "usa",
-            2: "canada",
-            3: "colombia",
-            4: "espana",
-            5: "japon",
-            6: "uruguay",
-            7: "sudafrica",
-            8: "corea"
-        };
+        const listaPaises = [
+            { n: "MÉXICO", f: "fi-mx", m: 0 }, { n: "USA", f: "fi-us", m: 0 }, { n: "CANADÁ", f: "fi-ca", m: 0 },
+            { n: "ESPAÑA", f: "fi-es", m: 1 }, { n: "COLOMBIA", f: "fi-co", m: 0 }, { n: "URUGUAY", f: "fi-uy", m: 2 },
+            { n: "JAPÓN", f: "fi-jp", m: 0 }, { n: "COREA DEL SUR", f: "fi-kr", m: 0 }, { n: "SUDÁFRICA", f: "fi-za", m: 0 },
+            { n: "UZBEKISTÁN", f: "fi-uz", m: 0 }, { n: "TÚNEZ", f: "fi-tn", m: 0 }
+        ];
 
-        const teamsData = {
-            "mexico": { name: "MÉXICO", flag: "fi-mx", mundiales: "17" },
-            "usa": { name: "ESTADOS UNIDOS", flag: "fi-us", mundiales: "11" },
-            "canada": { name: "CANADÁ", flag: "fi-ca", mundiales: "3" },
-            "colombia": { name: "COLOMBIA", flag: "fi-co", mundiales: "6" },
-            "espana": { name: "ESPAÑA", flag: "fi-es", mundiales: "16" },
-            "japon": { name: "JAPÓN", flag: "fi-jp", mundiales: "7" },
-            "uruguay": { name: "URUGUAY", flag: "fi-uy", mundiales: "14" },
-            "sudafrica": { name: "SUDÁFRICA", flag: "fi-za", mundiales: "3" },
-            "corea": { name: "COREA DEL SUR", flag: "fi-kr", mundiales: "11" }
-        };
+        let nombrePaisActual = "";
+        let urlPaisActual = "";
 
-        function actualizarInterfaz(key) {
-            const data = teamsData[key];
-            if (data) {
-                const nameEl = document.getElementById('country-name');
-                if (nameEl) nameEl.innerText = data.name;
+        const targetEntities = document.querySelectorAll('[mindar-image-target]');
 
-                const flagEl = document.querySelector('.badge-pais .fi');
-                if (flagEl) {
-                    flagEl.className = `fi ${data.flag}`;
-                }
+        targetEntities.forEach((entity) => {
+            entity.addEventListener("targetFound", () => {
+                const idx = parseInt(entity.dataset.id);
+                const datos = listaPaises[idx];
+                if (datos) {
+                    nombrePaisActual = datos.n;
+                    urlPaisActual = datos.n.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s/g, "-");
 
-                const mundialesText = document.querySelector('.info-text .value');
-                if (mundialesText) {
-                    mundialesText.innerHTML = `MUNDIALES: <span style="color:#fbbf24">${data.mundiales}</span>`;
-                }
+                    document.getElementById('country-name').innerText = datos.n;
+                    document.getElementById('equipo-txt').innerText = datos.n;
+                    document.getElementById('flag-icon').className = `fi ${datos.f}`;
+                    document.getElementById('corona-ent').setAttribute('animation', 'dur', 4000);
 
-                console.log(">>> GALIELVISION: Identificado con éxito -> " + data.name);
-            }
-        }
+                    const container = document.getElementById('trophy-container');
+                    const label = document.getElementById('trophy-label');
+                    container.innerHTML = "";
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const sceneEl = document.querySelector('a-scene');
-
-            const targets = document.querySelectorAll('[mindar-image-target]');
-
-            targets.forEach((target, index) => {
-                target.addEventListener("targetFound", (event) => {
-                    const countryKey = targetsMap[index];
-                    if (countryKey) {
-                        actualizarInterfaz(countryKey);
-
-                        if ("vibrate" in navigator) {
-                            navigator.vibrate(100);
+                    if (datos.m === 0) {
+                        label.innerText = "SIN TÍTULOS MUNDIALES";
+                    } else {
+                        label.innerText = `MUNDIALES: ${datos.m}`;
+                        for (let i = 0; i < datos.m; i++) {
+                            const trophy = document.createElement('a-entity');
+                            trophy.setAttribute('gltf-model', '#trofeo-mod');
+                            const xOffset = (i - (datos.m - 1) / 2) * 12;
+                            trophy.setAttribute('position', `${xOffset} -20 -38`);
+                            trophy.setAttribute('scale', '0.1 0.1 0.1');
+                            trophy.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear');
+                            container.appendChild(trophy);
                         }
                     }
-                });
-
-                target.addEventListener("targetLost", () => {
-                    console.log("Objetivo perdido");
-                });
+                    document.getElementById('info-panel').classList.add('active');
+                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, zIndex: 2000 });
+                }
             });
+        });
+        function procesarVoto(voto) {
+            if (!nombrePaisActual) return;
+
+            const modal = document.getElementById('mensaje-overlay');
+            const texto = document.getElementById('texto-mensaje');
+            const corona = document.getElementById('corona-ent');
+
+            // --- EL FIX DEFINITIVO ---
+            // 1. Forzamos a que la animación se detenga por completo
+            corona.removeAttribute('animation');
+
+            // 2. Definimos la velocidad (300ms turbo / 4000ms normal)
+            const nuevaDuracion = voto ? 300 : 4000;
+
+            // 3. Usamos setAttribute de forma atómica para que A-Frame lo reciba como un bloque nuevo
+            // Usar una cadena de texto a veces es más estable que el objeto en versiones 1.5.0
+            const animString = `property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: ${nuevaDuracion}; easing: linear`;
+
+            // 4. Re-inyectamos la animación
+            corona.setAttribute('animation', animString);
+
+            // --- LÓGICA DE TEXTO ---
+            if (voto) {
+                texto.innerHTML = `¡VOTASTE QUE <span style="color:#fbbf24">${nombrePaisActual}</span> SERÁ CAMPEÓN! 🏆`;
+                confetti({ particleCount: 150, spread: 100 });
+            } else {
+                texto.innerHTML = `VOTASTE QUE <span style="color:#f87171">${nombrePaisActual}</span> NO GANARÁ. 😴`;
+            }
+
+            modal.style.display = 'block';
+        }
+        function cerrarMensaje() {
+            document.getElementById('mensaje-overlay').style.display = 'none';
+        }
+
+        document.getElementById('btn-ver-mas').addEventListener('click', () => {
+            if (urlPaisActual !== "") window.location.href = `seleccion-${urlPaisActual}.html`;
+            else alert("Primero escanea un escudo");
         });
     </script>
 </body>
