@@ -1,0 +1,68 @@
+{
+  "MÉXICO": {
+    "goleador": { "nombre": "Javier Hernández", "img": "../ImgScanDatos/mx_goleador.jpg" },
+    "asistidor": { "nombre": "Cuauhtémoc Blanco", "img": "../ImgScanDatos/mx_asistidor.jpg" },
+    "portero": { "nombre": "Jorge Campos", "img": "../ImgScanDatos/mx_portero.jpg" },
+    "estadio": { "nombre": "Estadio Azteca", "img": "../ImgScanDatos/mx_estadio.jpg" }
+  },
+  "USA": {
+    "goleador": { "nombre": "Landon Donovan", "img": "../ImgScanDatos/usa_goleador.jpg" },
+    "asistidor": { "nombre": "Cobi Jones", "img": "../ImgScanDatos/usa_asistidor.jpg" },
+    "portero": { "nombre": "Tim Howard", "img": "../ImgScanDatos/usa_portero.jpg" },
+    "estadio": { "nombre": "Rose Bowl", "img": "../ImgScanDatos/usa_estadio.jpg" }
+  },
+  "CANADÁ": {
+    "goleador": { "nombre": "Cyle Larin", "img": "../ImgScanDatos/can_goleador.jpg" },
+    "asistidor": { "nombre": "Alphonso Davies", "img": "../ImgScanDatos/can_asistidor.jpg" },
+    "portero": { "nombre": "Craig Forrest", "img": "../ImgScanDatos/can_portero.jpg" },
+    "estadio": { "nombre": "BMO Field", "img": "../ImgScanDatos/can_estadio.jpg" }
+  },
+  "ESPAÑA": {
+    "goleador": { "nombre": "David Villa", "img": "../ImgScanDatos/esp_goleador.jpg" },
+    "asistidor": { "nombre": "Xavi Hernández", "img": "../ImgScanDatos/esp_asistidor.jpg" },
+    "portero": { "nombre": "Iker Casillas", "img": "../ImgScanDatos/esp_portero.jpg" },
+    "estadio": { "nombre": "Santiago Bernabéu", "img": "../ImgScanDatos/esp_estadio.jpg" }
+  },
+  "COLOMBIA": {
+    "goleador": { "nombre": "Radamel Falcao", "img": "../ImgScanDatos/col_goleador.jpg" },
+    "asistidor": { "nombre": "Carlos Valderrama", "img": "../ImgScanDatos/col_asistidor.jpg" },
+    "portero": { "nombre": "René Higuita", "img": "../ImgScanDatos/col_portero.jpg" },
+    "estadio": { "nombre": "Metropolitano", "img": "../ImgScanDatos/col_estadio.jpg" }
+  },
+  "URUGUAY": {
+    "goleador": { "nombre": "Luis Suárez", "img": "../ImgScanDatos/uy_goleador.jpg" },
+    "asistidor": { "nombre": "Diego Forlán", "img": "../ImgScanDatos/uy_asistidor.jpg" },
+    "portero": { "nombre": "Ladislao Mazurkiewicz", "img": "../ImgScanDatos/uy_portero.jpg" },
+    "estadio": { "nombre": "Estadio Centenario", "img": "../ImgScanDatos/uy_estadio.jpg" }
+  },
+  "JAPÓN": {
+    "goleador": { "nombre": "Kunishige Kamamoto", "img": "../ImgScanDatos/jp_goleador.jpg" },
+    "asistidor": { "nombre": "Shunsuke Nakamura", "img": "../ImgScanDatos/jp_asistidor.jpg" },
+    "portero": { "nombre": "Eiji Kawashima", "img": "../ImgScanDatos/jp_portero.jpg" },
+    "estadio": { "nombre": "Saitama Stadium", "img": "../ImgScanDatos/jp_estadio.jpg" }
+  },
+  "COREA DEL SUR": {
+    "goleador": { "nombre": "Cha Bum-kun", "img": "../ImgScanDatos/kr_goleador.jpg" },
+    "asistidor": { "nombre": "Son Heung-min", "img": "../ImgScanDatos/kr_asistidor.jpg" },
+    "portero": { "nombre": "Lee Woon-jae", "img": "../ImgScanDatos/kr_portero.jpg" },
+    "estadio": { "nombre": "Seoul World Cup Stadium", "img": "../ImgScanDatos/kr_estadio.jpg" }
+  },
+  "SUDÁFRICA": {
+    "goleador": { "nombre": "Benni McCarthy", "img": "../ImgScanDatos/za_goleador.jpg" },
+    "asistidor": { "nombre": "Siphiwe Tshabalala", "img": "../ImgScanDatos/za_asistidor.jpg" },
+    "portero": { "nombre": "Itumeleng Khune", "img": "../ImgScanDatos/za_portero.jpg" },
+    "estadio": { "nombre": "FNB Stadium", "img": "../ImgScanDatos/za_estadio.jpg" }
+  },
+  "UZBEKISTÁN": {
+    "goleador": { "nombre": "Eldor Shomurodov", "img": "../ImgScanDatos/uz_goleador.jpg" },
+    "asistidor": { "nombre": "Server Djeparov", "img": "../ImgScanDatos/uz_asistidor.jpg" },
+    "portero": { "nombre": "Ignatiy Nesterov", "img": "../ImgScanDatos/uz_portero.jpg" },
+    "estadio": { "nombre": "Bunyodkor Stadium", "img": "../ImgScanDatos/uz_estadio.jpg" }
+  },
+  "TÚNEZ": {
+    "goleador": { "nombre": "Issam Jemâa", "img": "../ImgScanDatos/tn_goleador.jpg" },
+    "asistidor": { "nombre": "Wahbi Khazri", "img": "../ImgScanDatos/tn_asistidor.jpg" },
+    "portero": { "nombre": "Sadok Sassi", "img": "../ImgScanDatos/tn_portero.jpg" },
+    "estadio": { "nombre": "Stade de Radès", "img": "../ImgScanDatos/tn_estadio.jpg" }
+  }
+}

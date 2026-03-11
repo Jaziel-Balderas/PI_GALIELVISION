@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* Estilos para el mensaje en pantalla */
+        /* --- ESTILOS ORIGINALES MANTENIDOS --- */
         #mensaje-overlay {
             display: none;
             position: fixed;
@@ -53,10 +53,6 @@
             transition: transform 0.2s;
         }
 
-        .btn-cerrar:hover {
-            transform: scale(1.05);
-        }
-
         .info-side {
             opacity: 0;
             pointer-events: none;
@@ -75,14 +71,84 @@
         .a-loader-title {
             display: none !important;
         }
+
+        /* --- NUEVOS ESTILOS PARA EL MODAL DE INFO --- */
+        .modal-info {
+            display: none;
+            position: fixed;
+            z-index: 4000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            border: 2px solid #38bdf8;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            width: 80%;
+            max-width: 300px;
+            box-shadow: 0 0 20px #38bdf8;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #38bdf8;
+            margin: 15px 0;
+        }
+
+        .close-info {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            color: #38bdf8;
+            cursor: pointer;
+        }
+
+        #info-nombre-jugador {
+            color: #fbbf24;
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        /* Asegurar que los botones AR sean clickeables */
+        .clickable {
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
+    <div id="modal-info" class="modal-info">
+        <div class="modal-content">
+            <span class="close-info" onclick="cerrarInfo()">&times;</span>
+            <h3 id="info-titulo-tipo" style="font-size: 14px; color: #38bdf8; letter-spacing: 2px;">TÍTULO</h3>
+            <img id="info-foto" src="" alt="Cargando...">
+            <p id="info-nombre-jugador">NOMBRE</p>
+        </div>
+    </div>
+
     <div id="mensaje-overlay">
         <p id="texto-mensaje"></p>
-        <button class="btn-cerrar" onclick="cerrarMensaje()">¡ENTENDIDO!</button>
+        <button class="btn-cerrar" onclick="cerrarMensaje()">¡CERRAR!</button>
     </div>
+
+    <button class="btn-cerrar-top" onclick="window.location.href='../index.html'">
+        ✕ <span class="text-btn">CERRAR ESCÁNER</span>
+    </button>
 
     <div class="app-container">
         <header class="main-header">
@@ -104,9 +170,19 @@
                             <a-asset-item id="corona-mod" src="../Modelos/golden_crown.glb"></a-asset-item>
                             <a-asset-item id="emoji-mod" src="../Modelos/emoji_tired_cartoon.glb"></a-asset-item>
                             <a-asset-item id="trofeo-mod" src="../Modelos/world_cup_trophy.glb"></a-asset-item>
+                            <a-asset-item id="balon-mod" src="../Modelos/football.glb"></a-asset-item>
+                            <a-asset-item id="tenis-mod" src="../Modelos/scanned_soccer_shoe.glb"></a-asset-item>
+                            <a-asset-item id="guante-mod" src="../Modelos/gloves_goalkeeper.glb"></a-asset-item>
+                            <a-asset-item id="estadio-mod"
+                                src="../Modelos/low_quality_soccer_stadium.glb"></a-asset-item>
+                            <a-asset-item id="porteria-mod"
+                                src="../Modelos/porteria_futbol_soccer_goal.glb"></a-asset-item>
                         </a-assets>
 
-                        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+                        <a-camera position="0 0 0" look-controls="enabled: false">
+                            <a-cursor raycaster="objects: .clickable" fuse="false"
+                                material="color: #38bdf8; shader: flat" scale="0.01 0.01 0.01"></a-cursor>
+                        </a-camera>
 
                         <a-entity mindar-image-target="targetIndex: 0" data-id="0"></a-entity>
                         <a-entity mindar-image-target="targetIndex: 1" data-id="1"></a-entity>
@@ -122,20 +198,34 @@
                     </a-scene>
                     <div class="scan-frame"></div>
                 </div>
+
+                <div id="container-mejor-gol" class="button-group">
+                    <button class="btn-highlight" onclick="verMejorGol()"
+                        style="width: 280px; height: 80px !important;">
+                        <div class="highlight-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true"
+                                style="width: 100%; height: 100%;">
+                                <a-entity gltf-model="#porteria-mod" position="0 -1.8 -13" scale="4 4 4"
+                                    rotation="0 60 0"
+                                    animation="property: rotation; to: 0 420 0; loop: true; dur: 6000; easing: linear">
+                                </a-entity>
+                                <a-light type="ambient" intensity="1.5"></a-light>
+                            </a-scene>
+                        </div>
+                        <span class="btn-text">VER MEJOR<br>GOL</span>
+                    </button>
+                </div>
             </section>
 
             <section class="info-side" id="info-panel">
                 <h2 id="equipo-txt"
                     style=" font-size: 50px; color: #38bdf8; font-family: 'Orbitron'; text-align: center; margin-bottom: 20px;">
-                    PAÍS
-                </h2>
+                    PAÍS</h2>
+
                 <div class="info-card trophy-card">
-                    <div class="info-text">
-                        <span id="trophy-label" class="value"> MUNDIALES:</span>
-                    </div>
+                    <div class="info-text"><span id="trophy-label" class="value"> MUNDIALES:</span></div>
                     <div class="view-3d">
-                        <a-scene embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled: false"
-                            renderer="alpha:true">
+                        <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
                             <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
                                 position="0 0 0"></a-camera>
                             <a-light type="ambient" intensity="1.5"></a-light>
@@ -144,19 +234,61 @@
                         </a-scene>
                     </div>
                 </div>
+
+                <div class="stats-mini-grid">
+                    <div class="stat-item clickable" onclick="mostrarInfo('goleador')">
+                        <div class="mini-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
+                                <a-entity gltf-model="#balon-mod" position="0 1.5 -5.5" scale="3 3 3"
+                                    animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span>GOLEADOR</span>
+                    </div>
+
+                    <div class="stat-item clickable" onclick="mostrarInfo('asistidor')">
+                        <div class="mini-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
+                                <a-entity gltf-model="#tenis-mod" position="0 1.8 -1.5" scale="5 5 5" rotation="0 70 0"
+                                    animation="property: position; to: 0 1.3 -1.5; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span>ASISTIDOR</span>
+                    </div>
+
+                    <div class="stat-item clickable" onclick="mostrarInfo('portero')">
+                        <div class="mini-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
+                                <a-light type="directional" position="1 5 10" intensity="2"></a-light>
+                                <a-entity gltf-model="#guante-mod" position="0 1.5 -110" scale="1 1 1" rotation="0 90 0"
+                                    animation="property: position; from: 0 20.8 -110; to: 0 2.8 -110; dir: alternate; dur: 1800; loop: true; easing: easeInOutSine"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span>PORTERO</span>
+                    </div>
+
+                    <div class="stat-item clickable" onclick="mostrarInfo('estadio')">
+                        <div class="mini-3d">
+                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
+                                <a-entity gltf-model="#estadio-mod" position="0 0 -60" scale="0.004 0.004 0.004"
+                                    rotation="65 30 30"
+                                    animation__2="property: position; to: 0 12 -60; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
+                            </a-scene>
+                        </div>
+                        <span>ESTADIO</span>
+                    </div>
+                </div>
+
                 <div class="prediction-box">
                     <div class="vote-options">
                         <div class="vote-btn">
                             <div class="vote-3d">
-                                <a-scene embedded vr-mode-ui="enabled:false"
-                                    device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
                                     <a-camera look-controls="enabled: false" position="0 0 0"></a-camera>
                                     <a-light type="ambient" intensity="1.5"></a-light>
                                     <a-light type="directional" position="1 1 10" intensity="13"></a-light>
                                     <a-entity id="corona-ent" gltf-model="#corona-mod" position="0 -0.5 -4.5"
-                                        scale="1 1 1"
-                                        animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
-                                    </a-entity>
+                                        animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"></a-entity>
                                 </a-scene>
                             </div>
                             <button onclick="procesarVoto(true)">SÍ</button>
@@ -164,31 +296,33 @@
 
                         <div class="vote-btn">
                             <div class="vote-3d">
-                                <a-scene embedded vr-mode-ui="enabled:false"
-                                    device-orientation-permission-ui="enabled: false" renderer="alpha:true">
+                                <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
                                     <a-camera look-controls="enabled: false" position="0 0 0"></a-camera>
                                     <a-light type="ambient" intensity="1.5"></a-light>
-                                    <a-light type="directional" position="1 1 1" intensity="1"></a-light>
                                     <a-entity gltf-model="#emoji-mod" position="-160 0 -90" rotation="0 -90 0"
                                         scale="40 20 40"
-                                        animation__float="property: position; from: -160 -2 -90; to: -160 5 -90; dur: 1500; dir: alternate; loop: true; easing: easeInOutSine">
-                                    </a-entity>
+                                        animation__float="property: position; from: -160 -2 -90; to: -160 5 -90; dur: 1500; dir: alternate; loop: true; easing: easeInOutSine"></a-entity>
                                 </a-scene>
                             </div>
                             <button class="no" onclick="procesarVoto(false)">NO</button>
                         </div>
                     </div>
-
-                    <button id="btn-ver-mas" class="btn-highlight"
-                        style="margin-top: 20px; width: 100%; height: 60px !important;">
-                        <span class="btn-text">VER MÁS ACERCA DE LA SELECCIÓN</span>
-                    </button>
                 </div>
             </section>
         </main>
     </div>
 
     <script>
+        // 1. CARGA DEL JSON
+        let infoDetallada = {};
+        fetch('../JSON/datos_paises.json')
+            .then(response => response.json())
+            .then(data => {
+                infoDetallada = data;
+                console.log("JSON cargado con éxito");
+            })
+            .catch(err => console.error("Error al cargar JSON:", err));
+
         const listaPaises = [
             { n: "MÉXICO", f: "fi-mx", m: 0 }, { n: "USA", f: "fi-us", m: 0 }, { n: "CANADÁ", f: "fi-ca", m: 0 },
             { n: "ESPAÑA", f: "fi-es", m: 1 }, { n: "COLOMBIA", f: "fi-co", m: 0 }, { n: "URUGUAY", f: "fi-uy", m: 2 },
@@ -212,8 +346,8 @@
                     document.getElementById('country-name').innerText = datos.n;
                     document.getElementById('equipo-txt').innerText = datos.n;
                     document.getElementById('flag-icon').className = `fi ${datos.f}`;
-                    document.getElementById('corona-ent').setAttribute('animation', 'dur', 4000);
 
+                    // Lógica de trofeos 3D
                     const container = document.getElementById('trophy-container');
                     const label = document.getElementById('trophy-label');
                     container.innerHTML = "";
@@ -232,50 +366,56 @@
                             container.appendChild(trophy);
                         }
                     }
+
                     document.getElementById('info-panel').classList.add('active');
-                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, zIndex: 2000 });
+                    document.getElementById('container-mejor-gol').classList.add('visible');
+                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
                 }
             });
         });
+
+        function mostrarInfo(tipo) {
+            if (!nombrePaisActual || !infoDetallada[nombrePaisActual]) {
+                alert("Escanea una selección primero.");
+                return;
+            }
+
+            const data = infoDetallada[nombrePaisActual][tipo];
+            document.getElementById('info-titulo-tipo').innerText = tipo.toUpperCase();
+            document.getElementById('info-foto').src = data.img;
+            document.getElementById('info-nombre-jugador').innerText = data.nombre;
+            document.getElementById('modal-info').style.display = 'flex';
+        }
+
+        function cerrarInfo() {
+            document.getElementById('modal-info').style.display = 'none';
+        }
+
+        // FUNCIONES DE VOTO Y NAVEGACIÓN
         function procesarVoto(voto) {
             if (!nombrePaisActual) return;
-
             const modal = document.getElementById('mensaje-overlay');
             const texto = document.getElementById('texto-mensaje');
             const corona = document.getElementById('corona-ent');
 
-            // --- EL FIX DEFINITIVO ---
-            // 1. Forzamos a que la animación se detenga por completo
             corona.removeAttribute('animation');
-
-            // 2. Definimos la velocidad (300ms turbo / 4000ms normal)
             const nuevaDuracion = voto ? 300 : 4000;
+            corona.setAttribute('animation', `property: rotation; to: 0 360 0; loop: true; dur: ${nuevaDuracion}; easing: linear`);
 
-            // 3. Usamos setAttribute de forma atómica para que A-Frame lo reciba como un bloque nuevo
-            // Usar una cadena de texto a veces es más estable que el objeto en versiones 1.5.0
-            const animString = `property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: ${nuevaDuracion}; easing: linear`;
+            texto.innerHTML = voto ?
+                `¡VOTASTE QUE <span style="color:#fbbf24">${nombrePaisActual}</span> SERÁ CAMPEÓN! 🏆` :
+                `VOTASTE QUE <span style="color:#f87171">${nombrePaisActual}</span> NO GANARÁ. 😴`;
 
-            // 4. Re-inyectamos la animación
-            corona.setAttribute('animation', animString);
-
-            // --- LÓGICA DE TEXTO ---
-            if (voto) {
-                texto.innerHTML = `¡VOTASTE QUE <span style="color:#fbbf24">${nombrePaisActual}</span> SERÁ CAMPEÓN! 🏆`;
-                confetti({ particleCount: 150, spread: 100 });
-            } else {
-                texto.innerHTML = `VOTASTE QUE <span style="color:#f87171">${nombrePaisActual}</span> NO GANARÁ. 😴`;
-            }
-
+            if (voto) confetti({ particleCount: 150, spread: 100 });
             modal.style.display = 'block';
         }
-        function cerrarMensaje() {
-            document.getElementById('mensaje-overlay').style.display = 'none';
-        }
 
-        document.getElementById('btn-ver-mas').addEventListener('click', () => {
-            if (urlPaisActual !== "") window.location.href = `seleccion-${urlPaisActual}.html`;
-            else alert("Primero escanea un escudo");
-        });
+        function cerrarMensaje() { document.getElementById('mensaje-overlay').style.display = 'none'; }
+
+        function verMejorGol() {
+            if (urlPaisActual) window.location.href = `video.html?pais=${urlPaisActual}`;
+            else alert("Escanea un escudo primero.");
+        }
     </script>
 </body>
 

@@ -10,7 +10,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 20px 40px;
+    padding: 10px 40px;
 }
 
 /* --- HEADER --- */
@@ -50,6 +50,7 @@ body {
 .camera-side {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 15px;
     height: 100%;
 }
@@ -167,23 +168,24 @@ body>video {
 
 .btn-back-main:hover {
     background: #ef4444;
-    /* Color de peligro al querer salir */
     border-color: #ef4444;
     color: white;
 }
 
 /* --- SECCIÓN DERECHA (Información) --- */
 .info-side {
+    margin-top: -25px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 25px;
+    justify-content: center;
 }
 
 .info-card,
 .prediction-box {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
-    padding: 20px;
+    padding: 12px 20px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -230,6 +232,7 @@ body>video {
     border-radius: 15px;
     text-align: center;
     border: 1px solid transparent;
+    padding: 8px;
 }
 
 .stat-item:hover {
@@ -238,7 +241,7 @@ body>video {
 }
 
 .mini-3d {
-    height: 60px;
+    height: 50px;
 }
 
 .stat-item span {
@@ -267,8 +270,8 @@ body>video {
 }
 
 .vote-3d {
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
 }
 
 .vote-btn button {
@@ -284,11 +287,46 @@ body>video {
     background: #ef4444;
 }
 
+.btn-cerrar-top {
+    position: absolute;
+    top: 20px;
+    left: 500px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.btn-cerrar-top:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+}
+
+#container-mejor-gol {
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    transition: opacity 0.5s ease;
+}
+
+#container-mejor-gol.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
 .button-group {
     display: flex;
-    gap: 15px;
-    width: 100%;
-    margin-top: 10px;
+    justify-content: center;
+    width: 50%;
 }
 
 .btn-highlight,
@@ -380,22 +418,19 @@ body>video {
     }
 
     .button-group {
-        flex-direction: column;
-        height: auto;
+        width: 50%;
+        padding: 0 20px;
     }
 
-    .btn-highlight,
-    .btn-back-main {
-        height: 70px;
+    .btn-highlight {
         width: 100%;
+        height: 70px !important;
     }
 
     .highlight-3d {
-        width: 80px;
-        height: 80px;
+        width: 120px;
+        height: 120px;
     }
-
-    /* Efecto translúcido solo para móvil */
     .info-card,
     .prediction-box,
     .stat-item,
@@ -434,4 +469,41 @@ body>video {
 .a-canvas+.a-ui,
 .a-inspector-loader {
     display: none !important;
-}   
+}
+
+@media (max-width: 768px) {
+    .btn-cerrar-top {
+        top: 15px;
+        left: 15px;
+        /* Hacemos que sea un círculo */
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        /* Icono más grande */
+        border-radius: 50%;
+        /* Círculo perfecto */
+        background: rgba(3, 19, 56, 0.9);
+        border: 2px solid rgba(56, 189, 248, 0.8);
+    }
+
+    /* OCULTAMOS EL TEXTO EN MÓVIL */
+    .btn-cerrar-top .text-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+
+    /* En pantallas muy pequeñas lo mantenemos en la esquina 
+       para que no tape el centro de la cámara */
+    .btn-cerrar-top {
+        left: 10px;
+        top: 10px;
+        transform: none;
+        /* Quitamos el centrado que teníamos antes */
+    }
+}
