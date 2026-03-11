@@ -13,8 +13,10 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
     <style>
-        /* --- ESTILOS ORIGINALES MANTENIDOS --- */
+        /* --- ESTILOS ORIGINALES --- */
         #mensaje-overlay {
             display: none;
             position: fixed;
@@ -72,7 +74,7 @@
             display: none !important;
         }
 
-        /* --- NUEVOS ESTILOS PARA EL MODAL DE INFO --- */
+        /* MODAL DE INFO */
         .modal-info {
             display: none;
             position: fixed;
@@ -124,9 +126,28 @@
             margin-top: 5px;
         }
 
-        /* Asegurar que los botones AR sean clickeables */
         .clickable {
             cursor: pointer;
+        }
+
+        /* Ajuste para que los model-viewer se vean bien en tus cuadros */
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            --poster-color: transparent;
+        }
+
+        /* ARREGLO CSS: Contenedor flexible para los trofeos */
+        #trophy-container-viewer {
+            display: flex;
+            justify-content: center;
+            /* Trofeos centrados */
+            align-items: center;
+            /* V-centrado de trofeos */
+            gap: 10px;
+            /* Espacio entre trofeos */
+            overflow: visible;
+            /* Asegura que no se corten */
         }
     </style>
 </head>
@@ -136,7 +157,7 @@
         <div class="modal-content">
             <span class="close-info" onclick="cerrarInfo()">&times;</span>
             <h3 id="info-titulo-tipo" style="font-size: 14px; color: #38bdf8; letter-spacing: 2px;">TÍTULO</h3>
-            <img id="info-foto" src="" alt="Cargando...">
+            <img id="info-foto" src="" alt="Foto Jugador">
             <p id="info-nombre-jugador">NOMBRE</p>
         </div>
     </div>
@@ -163,23 +184,17 @@
             <section class="camera-side">
                 <div class="video-window">
                     <a-scene id="escena-ar"
-                        mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; maxTrack: 1; warmupTolerance: 1; missTolerance: 25"
-                        embedded vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+                        mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; maxTrack: 1; filterMinCF: 0.0001; filterBeta: 0.001;"
+                        embedded vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false"
+                        ar-mode-ui="enabled: false">
 
                         <a-assets>
-                            <a-asset-item id="corona-mod" src="../Modelos/golden_crown.glb"></a-asset-item>
-                            <a-asset-item id="emoji-mod" src="../Modelos/emoji_tired_cartoon.glb"></a-asset-item>
                             <a-asset-item id="trofeo-mod" src="../Modelos/world_cup_trophy.glb"></a-asset-item>
-                            <a-asset-item id="balon-mod" src="../Modelos/football.glb"></a-asset-item>
-                            <a-asset-item id="tenis-mod" src="../Modelos/scanned_soccer_shoe.glb"></a-asset-item>
-                            <a-asset-item id="guante-mod" src="../Modelos/gloves_goalkeeper.glb"></a-asset-item>
-                            <a-asset-item id="estadio-mod"
-                                src="../Modelos/low_quality_soccer_stadium.glb"></a-asset-item>
                             <a-asset-item id="porteria-mod"
                                 src="../Modelos/porteria_futbol_soccer_goal.glb"></a-asset-item>
                         </a-assets>
 
-                        <a-camera position="0 0 0" look-controls="enabled: false">
+                        <a-camera position="0 0 0" look-controls="enabled: false" wasd-controls="enabled: false">
                             <a-cursor raycaster="objects: .clickable" fuse="false"
                                 material="color: #38bdf8; shader: flat" scale="0.01 0.01 0.01"></a-cursor>
                         </a-camera>
@@ -203,14 +218,8 @@
                     <button class="btn-highlight" onclick="verMejorGol()"
                         style="width: 280px; height: 80px !important;">
                         <div class="highlight-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true"
-                                style="width: 100%; height: 100%;">
-                                <a-entity gltf-model="#porteria-mod" position="0 -1.8 -13" scale="4 4 4"
-                                    rotation="0 60 0"
-                                    animation="property: rotation; to: 0 420 0; loop: true; dur: 6000; easing: linear">
-                                </a-entity>
-                                <a-light type="ambient" intensity="1.5"></a-light>
-                            </a-scene>
+                            <model-viewer src="../Modelos/porteria_futbol_soccer_goal.glb" autoplay auto-rotate
+                                interaction-prompt="none" disable-zoom></model-viewer>
                         </div>
                         <span class="btn-text">VER MEJOR<br>GOL</span>
                     </button>
@@ -224,56 +233,39 @@
 
                 <div class="info-card trophy-card">
                     <div class="info-text"><span id="trophy-label" class="value"> MUNDIALES:</span></div>
-                    <div class="view-3d">
-                        <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
-                            <a-camera look-controls="enabled: false" wasd-controls="enabled: false"
-                                position="0 0 0"></a-camera>
-                            <a-light type="ambient" intensity="1.5"></a-light>
-                            <a-light type="directional" position="1 2 10" intensity="5"></a-light>
-                            <a-entity id="trophy-container"></a-entity>
-                        </a-scene>
+                    <div class="view-3d" id="trophy-container-viewer">
                     </div>
                 </div>
 
                 <div class="stats-mini-grid">
                     <div class="stat-item clickable" onclick="mostrarInfo('goleador')">
                         <div class="mini-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
-                                <a-entity gltf-model="#balon-mod" position="0 1.5 -5.5" scale="3 3 3"
-                                    animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"></a-entity>
-                            </a-scene>
+                            <model-viewer src="../Modelos/football.glb" autoplay auto-rotate interaction-prompt="none"
+                                disable-zoom></model-viewer>
                         </div>
                         <span>GOLEADOR</span>
                     </div>
 
                     <div class="stat-item clickable" onclick="mostrarInfo('asistidor')">
                         <div class="mini-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
-                                <a-entity gltf-model="#tenis-mod" position="0 1.8 -1.5" scale="5 5 5" rotation="0 70 0"
-                                    animation="property: position; to: 0 1.3 -1.5; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-entity>
-                            </a-scene>
+                            <model-viewer src="../Modelos/scanned_soccer_shoe.glb" autoplay auto-rotate
+                                interaction-prompt="none" disable-zoom></model-viewer>
                         </div>
                         <span>ASISTIDOR</span>
                     </div>
 
                     <div class="stat-item clickable" onclick="mostrarInfo('portero')">
                         <div class="mini-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
-                                <a-light type="directional" position="1 5 10" intensity="2"></a-light>
-                                <a-entity gltf-model="#guante-mod" position="0 1.5 -110" scale="1 1 1" rotation="0 90 0"
-                                    animation="property: position; from: 0 20.8 -110; to: 0 2.8 -110; dir: alternate; dur: 1800; loop: true; easing: easeInOutSine"></a-entity>
-                            </a-scene>
+                            <model-viewer src="../Modelos/gloves_goalkeeper.glb" autoplay auto-rotate
+                                interaction-prompt="none" disable-zoom></model-viewer>
                         </div>
                         <span>PORTERO</span>
                     </div>
 
                     <div class="stat-item clickable" onclick="mostrarInfo('estadio')">
                         <div class="mini-3d">
-                            <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
-                                <a-entity gltf-model="#estadio-mod" position="0 0 -60" scale="0.004 0.004 0.004"
-                                    rotation="65 30 30"
-                                    animation__2="property: position; to: 0 12 -60; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
-                            </a-scene>
+                            <model-viewer src="../Modelos/low_quality_soccer_stadium.glb" autoplay auto-rotate
+                                interaction-prompt="none" disable-zoom></model-viewer>
                         </div>
                         <span>ESTADIO</span>
                     </div>
@@ -283,26 +275,15 @@
                     <div class="vote-options">
                         <div class="vote-btn">
                             <div class="vote-3d">
-                                <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
-                                    <a-camera look-controls="enabled: false" position="0 0 0"></a-camera>
-                                    <a-light type="ambient" intensity="1.5"></a-light>
-                                    <a-light type="directional" position="1 1 10" intensity="13"></a-light>
-                                    <a-entity id="corona-ent" gltf-model="#corona-mod" position="0 -0.5 -4.5"
-                                        animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"></a-entity>
-                                </a-scene>
+                                <model-viewer id="crown-viewer" src="../Modelos/golden_crown.glb" autoplay auto-rotate
+                                    interaction-prompt="none" disable-zoom></model-viewer>
                             </div>
                             <button onclick="procesarVoto(true)">SÍ</button>
                         </div>
-
                         <div class="vote-btn">
                             <div class="vote-3d">
-                                <a-scene embedded vr-mode-ui="enabled:false" renderer="alpha:true">
-                                    <a-camera look-controls="enabled: false" position="0 0 0"></a-camera>
-                                    <a-light type="ambient" intensity="1.5"></a-light>
-                                    <a-entity gltf-model="#emoji-mod" position="-160 0 -90" rotation="0 -90 0"
-                                        scale="40 20 40"
-                                        animation__float="property: position; from: -160 -2 -90; to: -160 5 -90; dur: 1500; dir: alternate; loop: true; easing: easeInOutSine"></a-entity>
-                                </a-scene>
+                                <model-viewer id="emoji-viewer" src="../Modelos/emoji_tired_cartoon.glb" autoplay
+                                    auto-rotate interaction-prompt="none" disable-zoom></model-viewer>
                             </div>
                             <button class="no" onclick="procesarVoto(false)">NO</button>
                         </div>
@@ -313,14 +294,10 @@
     </div>
 
     <script>
-        // 1. CARGA DEL JSON
         let infoDetallada = {};
         fetch('../JSON/datos_paises.json')
             .then(response => response.json())
-            .then(data => {
-                infoDetallada = data;
-                console.log("JSON cargado con éxito");
-            })
+            .then(data => { infoDetallada = data; })
             .catch(err => console.error("Error al cargar JSON:", err));
 
         const listaPaises = [
@@ -333,40 +310,41 @@
         let nombrePaisActual = "";
         let urlPaisActual = "";
 
-        const targetEntities = document.querySelectorAll('[mindar-image-target]');
-
-        targetEntities.forEach((entity) => {
+        document.querySelectorAll('[mindar-image-target]').forEach((entity) => {
             entity.addEventListener("targetFound", () => {
                 const idx = parseInt(entity.dataset.id);
                 const datos = listaPaises[idx];
                 if (datos) {
                     nombrePaisActual = datos.n;
                     urlPaisActual = datos.n.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s/g, "-");
-
                     document.getElementById('country-name').innerText = datos.n;
                     document.getElementById('equipo-txt').innerText = datos.n;
                     document.getElementById('flag-icon').className = `fi ${datos.f}`;
 
-                    // Lógica de trofeos 3D
-                    const container = document.getElementById('trophy-container');
+                    const container = document.getElementById('trophy-container-viewer');
                     const label = document.getElementById('trophy-label');
                     container.innerHTML = "";
+
+                    // Reset de velocidad global para model-viewers al escanear nuevo
+                    ajustarVelocidadGlobal("30deg");
 
                     if (datos.m === 0) {
                         label.innerText = "SIN TÍTULOS MUNDIALES";
                     } else {
                         label.innerText = `MUNDIALES: ${datos.m}`;
                         for (let i = 0; i < datos.m; i++) {
-                            const trophy = document.createElement('a-entity');
-                            trophy.setAttribute('gltf-model', '#trofeo-mod');
-                            const xOffset = (i - (datos.m - 1) / 2) * 12;
-                            trophy.setAttribute('position', `${xOffset} -20 -38`);
-                            trophy.setAttribute('scale', '0.1 0.1 0.1');
-                            trophy.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear');
+                            const trophy = document.createElement('model-viewer');
+                            trophy.setAttribute('src', '../Modelos/world_cup_trophy.glb');
+                            trophy.setAttribute('autoplay', '');
+                            trophy.setAttribute('auto-rotate', '');
+                            trophy.setAttribute('rotation-per-second', '30deg'); // Velocidad inicial normal
+
+                            // ARREGLO JS: Tamaño de la copa duplicado
+                            trophy.style.width = "80px";
+                            trophy.style.height = "80px";
                             container.appendChild(trophy);
                         }
                     }
-
                     document.getElementById('info-panel').classList.add('active');
                     document.getElementById('container-mejor-gol').classList.add('visible');
                     confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
@@ -374,12 +352,16 @@
             });
         });
 
-        function mostrarInfo(tipo) {
-            if (!nombrePaisActual || !infoDetallada[nombrePaisActual]) {
-                alert("Escanea una selección primero.");
-                return;
-            }
+        // Función auxiliar para cambiar la velocidad de rotación de los model-viewers
+        function ajustarVelocidadGlobal(velocidadModelViewer) {
+            const todosLosModelViewers = document.querySelectorAll('model-viewer');
+            todosLosModelViewers.forEach(m => {
+                m.setAttribute('rotation-per-second', velocidadModelViewer);
+            });
+        }
 
+        function mostrarInfo(tipo) {
+            if (!nombrePaisActual || !infoDetallada[nombrePaisActual]) return;
             const data = infoDetallada[nombrePaisActual][tipo];
             document.getElementById('info-titulo-tipo').innerText = tipo.toUpperCase();
             document.getElementById('info-foto').src = data.img;
@@ -387,35 +369,29 @@
             document.getElementById('modal-info').style.display = 'flex';
         }
 
-        function cerrarInfo() {
-            document.getElementById('modal-info').style.display = 'none';
-        }
+        function cerrarInfo() { document.getElementById('modal-info').style.display = 'none'; }
 
-        // FUNCIONES DE VOTO Y NAVEGACIÓN
         function procesarVoto(voto) {
             if (!nombrePaisActual) return;
             const modal = document.getElementById('mensaje-overlay');
             const texto = document.getElementById('texto-mensaje');
-            const corona = document.getElementById('corona-ent');
-
-            corona.removeAttribute('animation');
-            const nuevaDuracion = voto ? 300 : 4000;
-            corona.setAttribute('animation', `property: rotation; to: 0 360 0; loop: true; dur: ${nuevaDuracion}; easing: linear`);
-
             texto.innerHTML = voto ?
                 `¡VOTASTE QUE <span style="color:#fbbf24">${nombrePaisActual}</span> SERÁ CAMPEÓN! 🏆` :
                 `VOTASTE QUE <span style="color:#f87171">${nombrePaisActual}</span> NO GANARÁ. 😴`;
 
-            if (voto) confetti({ particleCount: 150, spread: 100 });
+            if (voto) {
+                // Modo turbo
+                ajustarVelocidadGlobal("400deg");
+                confetti({ particleCount: 150, spread: 100 });
+            } else {
+                // Modo ultra-lento
+                ajustarVelocidadGlobal("5deg");
+            }
             modal.style.display = 'block';
         }
 
         function cerrarMensaje() { document.getElementById('mensaje-overlay').style.display = 'none'; }
-
-        function verMejorGol() {
-            if (urlPaisActual) window.location.href = `video.html?pais=${urlPaisActual}`;
-            else alert("Escanea un escudo primero.");
-        }
+        function verMejorGol() { if (urlPaisActual) window.location.href = `video.html?pais=${urlPaisActual}`; }
     </script>
 </body>
 
