@@ -13,6 +13,46 @@
 </head>
 
 <body>
+    <div class="btn-help" onclick="toggleManual()">
+    <span class="material-symbols-outlined">help</span>
+    </div>
+
+    <div id="modalManual" class="modal-manual">
+        <div class="manual-content">
+            <span class="material-symbols-outlined close-manual" onclick="toggleManual()">close</span>
+            <h2>GUÍA GALIELVISION</h2>
+
+            <div class="step-item">
+                <span class="material-symbols-outlined icon-box-mini">groups</span>
+                <p><strong>EQUIPOS:</strong> Explora las selecciones importantes que participan en este mundial y una pequeña información.</p>
+            </div>
+
+            <div class="step-item">
+                <span class="material-symbols-outlined icon-box-mini">trophy</span>
+                <p><strong>MUNDIAL:</strong> Consulta información general sobre la Copa del Mundo 2026, historia y fases
+                    del torneo.</p>
+            </div>
+
+            <div class="step-item">
+                <span class="material-symbols-outlined icon-box-mini">stadium</span>
+                <p><strong>ESTADIOS:</strong> Conoce las sedes oficiales en México.</p>
+            </div>
+
+            <div class="step-item">
+                <span class="material-symbols-outlined icon-box-mini">document_scanner</span>
+                <p><strong>ESCANEO AR:</strong>Apunta tu cámara a los escudos de las selecciones
+                    anfitrionass y las que jugarán en México y conoce algunos datos importantes.</p>
+            </div>
+
+            <div class="step-item">
+                <span class="material-symbols-outlined icon-box-mini">quiz</span>
+                <p><strong>TRIVIA:</strong> Pon a prueba tus conocimientos futbolísticos y compite en la trivia del día</p>
+            </div>
+
+            <button class="btn-cerrar" onclick="toggleManual()"
+                style="width: 100%; margin-top: 10px;">¡ENTENDIDO!</button>
+        </div>
+    </div>
     <h1>
         GalielVision
     </h1>
@@ -49,6 +89,16 @@
             <h2>TRIVIA</h2>
         </a>
     </div>
+    <script>
+        function toggleManual() {
+            const modal = document.getElementById('modalManual');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+            }
+        }
+    </script>
 </body>
 
 </html>
