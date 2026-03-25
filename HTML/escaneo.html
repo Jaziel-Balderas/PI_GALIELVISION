@@ -203,7 +203,7 @@
                             <a-light type="directional" color="#ffffff" intensity="4.5" position="20 5 12"></a-light>
                             <a-light type="ambient" color="#88ccff" intensity="2.6"></a-light>
                             <a-gltf-model id="ronaldo-model" src="#balon-ar" position="5 0 -30" scale="2 2 2" rotation="0 0 0"
-                                animation-mixer="timeScale: 0" class="clickable" play-siuuu gyro-rotate visible="false"> </a-gltf-model>
+                                animation-mixer="timeScale: 0" class="clickable" play-siuuu gyro-rotate draggable visible="false"> </a-gltf-model>
                         </a-camera>
 
                         <a-entity mindar-image-target="targetIndex: 0" data-id="0"></a-entity>
@@ -301,6 +301,73 @@
     </div>
 
     <script>
+        AFRAME.registerComponent('draggable', {
+            init: function () {
+                this.isDragging = false;
+                this.lastPos = { x: 0, y: 0 };
+                var el = this.el;
+                var self = this;
+
+                this.el.sceneEl.addEventListener('renderstart', function () {
+                    var canvas = self.el.sceneEl.canvas;
+
+                    function hitTest(evt) {
+                        var rect = canvas.getBoundingClientRect();
+                        var cx = evt.touches ? evt.touches[0].clientX : evt.clientX;
+                        var cy = evt.touches ? evt.touches[0].clientY : evt.clientY;
+                        var mouse = new THREE.Vector2(
+                            ((cx - rect.left) / rect.width) * 2 - 1,
+                            -((cy - rect.top) / rect.height) * 2 + 1
+                        );
+                        var rc = new THREE.Raycaster();
+                        rc.setFromCamera(mouse, el.sceneEl.camera);
+                        return rc.intersectObject(el.object3D, true).length > 0;
+                    }
+
+                    function startDrag(cx, cy, evt) {
+                        self.isDragging = true;
+                        self.lastPos.x = cx;
+                        self.lastPos.y = cy;
+                        evt.preventDefault();
+                    }
+
+                    function moveDrag(cx, cy) {
+                        if (!self.isDragging) return;
+                        var dx = cx - self.lastPos.x;
+                        var dy = cy - self.lastPos.y;
+                        var pos = el.getAttribute('position');
+                        var factor = 0.08;
+                        el.setAttribute('position', {
+                            x: pos.x + dx * factor,
+                            y: pos.y - dy * factor,
+                            z: pos.z
+                        });
+                        self.lastPos.x = cx;
+                        self.lastPos.y = cy;
+                    }
+
+                    canvas.addEventListener('mousedown', function (e) {
+                        if (hitTest(e)) startDrag(e.clientX, e.clientY, e);
+                    });
+                    canvas.addEventListener('mousemove', function (e) {
+                        moveDrag(e.clientX, e.clientY);
+                    });
+                    canvas.addEventListener('mouseup', function () { self.isDragging = false; });
+
+                    canvas.addEventListener('touchstart', function (e) {
+                        if (e.touches.length === 1 && hitTest(e)) startDrag(e.touches[0].clientX, e.touches[0].clientY, e);
+                    }, { passive: false });
+                    canvas.addEventListener('touchmove', function (e) {
+                        if (e.touches.length === 1) {
+                            e.preventDefault();
+                            moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+                        }
+                    }, { passive: false });
+                    canvas.addEventListener('touchend', function () { self.isDragging = false; });
+                });
+            }
+        });
+
         AFRAME.registerComponent('gyro-rotate', {
             init: function () {
                 this.offset = null;
