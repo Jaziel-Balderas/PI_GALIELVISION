@@ -194,7 +194,17 @@
                             <a-asset-item id="trofeo-mod" src="../Modelos/world_cup_trophy.glb"></a-asset-item>
                             <a-asset-item id="porteria-mod"
                                 src="../Modelos/porteria_futbol_soccer_goal.glb"></a-asset-item>
-                            <a-asset-item id="balon-ar" src="../Modelos/ronaldo_dancing_twerk.glb"></a-asset-item>
+                            <a-asset-item id="modelo-mexico" src="../Modelos/Mexico.glb"></a-asset-item>
+                            <a-asset-item id="modelo-usa" src="../Modelos/USA.glb"></a-asset-item>
+                            <a-asset-item id="modelo-canada" src="../Modelos/canadá.glb"></a-asset-item>
+                            <a-asset-item id="modelo-espana" src="../Modelos/Espana.glb"></a-asset-item>
+                            <a-asset-item id="modelo-colombia" src="../Modelos/Colombia.glb"></a-asset-item>
+                            <a-asset-item id="modelo-uruguay" src="../Modelos/Uruguay.glb"></a-asset-item>
+                            <a-asset-item id="modelo-japon" src="../Modelos/Japon.glb"></a-asset-item>
+                            <a-asset-item id="modelo-corea" src="../Modelos/Corea.glb"></a-asset-item>
+                            <a-asset-item id="modelo-sudafrica" src="../Modelos/Sudafica.glb"></a-asset-item>
+                            <a-asset-item id="modelo-uzbekistan" src="../Modelos/uzbekistan.glb"></a-asset-item>
+                            <a-asset-item id="modelo-tunez" src="../Modelos/tunez.glb"></a-asset-item>
                         </a-assets>
 
                         <a-camera position="0 0 0" look-controls="enabled: false" wasd-controls="enabled: false"
@@ -202,7 +212,7 @@
                             raycaster="objects: .clickable">
                             <a-light type="directional" color="#ffffff" intensity="4.5" position="20 5 12"></a-light>
                             <a-light type="ambient" color="#88ccff" intensity="2.6"></a-light>
-                            <a-gltf-model id="ronaldo-model" src="#balon-ar" position="5 0 -30" scale="2 2 2" rotation="0 0 0"
+                            <a-gltf-model id="ronaldo-model" position="5 0 -30" scale="2 2 2" rotation="0 0 0"
                                 animation-mixer="timeScale: 0" class="clickable" play-siuuu gyro-rotate draggable visible="false"> </a-gltf-model>
                         </a-camera>
 
@@ -401,10 +411,17 @@
             .catch(err => console.error("Error al cargar JSON:", err));
 
         const listaPaises = [
-            { n: "MÉXICO", f: "fi-mx", m: 0 }, { n: "USA", f: "fi-us", m: 0 }, { n: "CANADÁ", f: "fi-ca", m: 0 },
-            { n: "ESPAÑA", f: "fi-es", m: 1 }, { n: "COLOMBIA", f: "fi-co", m: 0 }, { n: "URUGUAY", f: "fi-uy", m: 2 },
-            { n: "JAPÓN", f: "fi-jp", m: 0 }, { n: "COREA DEL SUR", f: "fi-kr", m: 0 }, { n: "SUDÁFRICA", f: "fi-za", m: 0 },
-            { n: "UZBEKISTÁN", f: "fi-uz", m: 0 }, { n: "TÚNEZ", f: "fi-tn", m: 0 }
+            { n: "MÉXICO", f: "fi-mx", m: 0, modelo: "#modelo-mexico" },
+            { n: "USA", f: "fi-us", m: 0, modelo: "#modelo-usa" },
+            { n: "CANADÁ", f: "fi-ca", m: 0, modelo: "#modelo-canada" },
+            { n: "ESPAÑA", f: "fi-es", m: 1, modelo: "#modelo-espana" },
+            { n: "COLOMBIA", f: "fi-co", m: 0, modelo: "#modelo-colombia" },
+            { n: "URUGUAY", f: "fi-uy", m: 2, modelo: "#modelo-uruguay" },
+            { n: "JAPÓN", f: "fi-jp", m: 0, modelo: "#modelo-japon" },
+            { n: "COREA DEL SUR", f: "fi-kr", m: 0, modelo: "#modelo-corea" },
+            { n: "SUDÁFRICA", f: "fi-za", m: 0, modelo: "#modelo-sudafrica" },
+            { n: "UZBEKISTÁN", f: "fi-uz", m: 0, modelo: "#modelo-uzbekistan" },
+            { n: "TÚNEZ", f: "fi-tn", m: 0, modelo: "#modelo-tunez" }
         ];
 
         let nombrePaisActual = "";
@@ -447,7 +464,17 @@
                     }
                     document.getElementById('info-panel').classList.add('active');
                     document.getElementById('container-mejor-gol').classList.add('visible');
-                    document.getElementById('ronaldo-model').setAttribute('visible', 'true');
+
+                    var modelo3d = document.getElementById('ronaldo-model');
+                    modelo3d.setAttribute('visible', 'false');
+                    modelo3d.removeAttribute('gltf-model');
+                    modelo3d.removeAttribute('animation-mixer');
+                    setTimeout(function() {
+                        modelo3d.setAttribute('gltf-model', datos.modelo);
+                        modelo3d.setAttribute('animation-mixer', 'timeScale: 0');
+                        modelo3d.setAttribute('visible', 'true');
+                    }, 100);
+
                     confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
                 }
             });
